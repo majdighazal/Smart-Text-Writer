@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Smart Text Assistant</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --corp-navy: #0f2742;
+      --corp-navy-2: #14365c;
+      --corp-blue: #2563eb;
+      --corp-cyan: #0ea5a4;
+      --corp-gold: #c89b3c;
+      --page-bg: #eef3f8;
+      --card-bg: #ffffff;
+      --text-main: #132238;
+      --text-muted: #64748b;
+      --line: #d9e2ec;
+      --line-strong: #b9c8d8;
+      --shadow-soft: 0 14px 34px rgba(15, 39, 66, 0.12);
+      --warm-glow: #f59e0b;
+      --warm-glow-soft: rgba(245, 158, 11, 0.24);
+      --warm-glow-faint: rgba(251, 191, 36, 0.14);
+      --shadow-small: 0 8px 20px rgba(15, 39, 66, 0.10);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+    }
+
+    body.dark-theme {
+      --page-bg: #0b1220;
+      --card-bg: #111c2e;
+      --text-main: #e5edf7;
+      --text-muted: #9fb0c7;
+      --line: rgba(148, 163, 184, 0.28);
+      --line-strong: rgba(148, 163, 184, 0.44);
+      --shadow-soft: 0 16px 42px rgba(0, 0, 0, 0.38);
+      --shadow-small: 0 10px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at top left, rgba(14, 165, 164, 0.16), transparent 36%),
+        radial-gradient(circle at top right, rgba(37, 99, 235, 0.13), transparent 32%),
+        linear-gradient(180deg, #f8fbff 0%, var(--page-bg) 100%);
+    }
+
+    .page-shell {
+      width: min(1060px, calc(100% - 28px));
+      margin: 18px auto;
+    }
+
+    .app-frame {
+      overflow: hidden;
+      border: 1px solid rgba(185, 200, 216, 0.65);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      position: relative;
+      padding: 24px 30px 22px;
+      color: #ffffff;
+      background:
+        linear-gradient(135deg, rgba(15, 39, 66, 0.98), rgba(20, 54, 92, 0.96)),
+        linear-gradient(90deg, var(--corp-cyan), var(--corp-blue));
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: auto -70px -105px auto;
+      width: 270px;
+      height: 270px;
+      border-radius: 999px;
+      background: rgba(14, 165, 164, 0.22);
+      filter: blur(2px);
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--corp-cyan), #38bdf8);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 1.15rem;
+      box-shadow: 0 12px 30px rgba(14, 165, 164, 0.32);
+    }
+
+    .eyebrow {
+      margin: 0 0 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.85rem, 3vw, 2.65rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-note {
+      max-width: 720px;
+      margin: 12px 0 0;
+      position: relative;
+      z-index: 1;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.96rem;
+      line-height: 1.5;
+    }
+
+    .status-pill {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-width: max-content;
+      padding: 8px 13px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #34d399;
+      box-shadow: 0 0 0 6px rgba(52, 211, 153, 0.12);
+    }
+
+    .workspace {
+      padding: 18px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--card-bg);
+      box-shadow: var(--shadow-small);
+    }
+
+    .editor-panel {
+      padding: 16px;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .section-label h2 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--corp-navy);
+    }
+
+    .section-label span {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    #inputText {
+      width: 100%;
+      min-height: 270px;
+      max-height: 52vh;
+      overflow-y: auto;
+      padding: 16px;
+      font-size: 1.01rem;
+      line-height: 1.58;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      outline: none;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      color: var(--text-main);
+      font-weight: 500;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+      transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, transform 0.22s ease;
+    }
+
+    #inputText:empty::before {
+      content: attr(placeholder);
+      color: #94a3b8;
+      pointer-events: none;
+    }
+
+    #inputText:focus {
+      border-color: rgba(245, 158, 11, 0.95);
+      background:
+        radial-gradient(circle at 18px 18px, rgba(251, 191, 36, 0.10), transparent 34%),
+        linear-gradient(180deg, #fffefa 0%, #ffffff 62%, #fff8ed 100%);
+      box-shadow:
+        0 0 0 4px var(--warm-glow-faint),
+        0 0 26px var(--warm-glow-soft),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    #inputText.is-typing {
+      animation: warmTypingGlow 1.15s ease-in-out infinite alternate;
+      border-color: rgba(245, 158, 11, 1);
+    }
+
+    @keyframes warmTypingGlow {
+      from {
+        box-shadow:
+          0 0 0 4px rgba(251, 191, 36, 0.12),
+          0 0 20px rgba(245, 158, 11, 0.20),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      }
+      to {
+        box-shadow:
+          0 0 0 5px rgba(251, 191, 36, 0.18),
+          0 0 38px rgba(245, 158, 11, 0.38),
+          0 0 70px rgba(251, 146, 60, 0.16),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      }
+    }
+
+    .prediction-panel {
+      margin-top: 12px;
+      padding: 13px 14px 10px;
+      border: 1px dashed var(--line-strong);
+      border-radius: var(--radius-md);
+      background: #f8fbff;
+    }
+
+    .prediction-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    #predictions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 36px;
+      align-items: center;
+    }
+
+    #predictions:empty::before {
+      content: 'Start typing to show word suggestions';
+      color: #94a3b8;
+      font-size: 0.94rem;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+    .prediction-item {
+      cursor: pointer;
+      padding: 7px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(14, 165, 164, 0.18);
+      background: #e9fbfa;
+      color: #0f766e;
+      font-size: 0.94rem;
+      font-weight: 700;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .prediction-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(14, 165, 164, 0.42);
+      background: #d6f7f5;
+      box-shadow: 0 8px 16px rgba(14, 165, 164, 0.16);
+    }
+
+    .control-panel {
+      margin-top: 14px;
+      padding: 16px;
+    }
+
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    .action-buttons .btn {
+      min-height: 40px;
+      border: 0;
+      border-radius: 13px;
+      font-size: 0.94rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      box-shadow: 0 10px 22px rgba(15, 39, 66, 0.12);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+    }
+
+    .action-buttons .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 26px rgba(15, 39, 66, 0.18);
+      filter: brightness(1.02);
+    }
+
+    .btn-primary { background: linear-gradient(135deg, #1d4ed8, #2563eb); }
+    .btn-info { background: linear-gradient(135deg, #0891b2, #06b6d4); color: #fff; }
+    .btn-secondary { background: linear-gradient(135deg, #475569, #64748b); }
+    .btn-danger { background: linear-gradient(135deg, #b91c1c, #ef4444); }
+    .btn-success { background: linear-gradient(135deg, #047857, #10b981); }
+    .btn-warning { background: linear-gradient(135deg, #b7791f, #f59e0b); color: #fff; }
+
+    .settings-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: #f8fbff;
+    }
+
+    .settings-copy strong {
+      display: block;
+      color: var(--corp-navy);
+      font-size: 0.96rem;
+      font-weight: 800;
+    }
+
+    .settings-copy span {
+      display: block;
+      margin-top: 2px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .form-check {
+      margin: 0;
+      min-width: max-content;
+    }
+
+    .form-check-input {
+      width: 2.6em;
+      height: 1.35em;
+      cursor: pointer;
+      border-color: var(--line-strong);
+    }
+
+    .form-check-input:checked {
+      background-color: var(--corp-cyan);
+      border-color: var(--corp-cyan);
+    }
+
+    .form-check-input:focus {
+      box-shadow: 0 0 0 4px rgba(14, 165, 164, 0.13);
+      border-color: var(--corp-cyan);
+    }
+
+    .form-check-label {
+      margin-left: 8px;
+      color: var(--corp-navy);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .footer {
+      margin-top: 10px;
+      padding: 10px 6px 2px;
+      color: var(--text-muted);
+      text-align: center;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    body.dark-theme {
+      background:
+        radial-gradient(circle at top left, rgba(14, 165, 164, 0.10), transparent 36%),
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.10), transparent 32%),
+        linear-gradient(180deg, #08111f 0%, var(--page-bg) 100%);
+    }
+
+    body.dark-theme .app-frame {
+      border-color: rgba(148, 163, 184, 0.22);
+      background: rgba(15, 23, 42, 0.86);
+    }
+
+    body.dark-theme .hero {
+      background:
+        linear-gradient(135deg, rgba(7, 18, 34, 0.98), rgba(17, 34, 58, 0.96)),
+        linear-gradient(90deg, var(--corp-cyan), var(--corp-blue));
+    }
+
+    body.dark-theme .section-label h2,
+    body.dark-theme .settings-copy strong,
+    body.dark-theme .form-check-label {
+      color: #f8fafc;
+    }
+
+    body.dark-theme #inputText {
+      background: linear-gradient(180deg, #0f1b2d 0%, #101d31 100%);
+      color: #f8fafc;
+      border-color: rgba(148, 163, 184, 0.30);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    body.dark-theme #inputText:focus {
+      background:
+        radial-gradient(circle at 18px 18px, rgba(251, 191, 36, 0.10), transparent 34%),
+        linear-gradient(180deg, #13213a 0%, #101d31 62%, #1c1a22 100%);
+    }
+
+    body.dark-theme .prediction-panel,
+    body.dark-theme .settings-card {
+      background: rgba(15, 23, 42, 0.74);
+    }
+
+    body.dark-theme .prediction-item {
+      border-color: rgba(45, 212, 191, 0.24);
+      background: rgba(20, 184, 166, 0.14);
+      color: #8ff5e8;
+    }
+
+    body.dark-theme .prediction-item:hover {
+      background: rgba(20, 184, 166, 0.22);
+    }
+
+    @media (max-width: 992px) {
+      .action-buttons {
+        grid-template-columns: repeat(3, minmax(130px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-shell {
+        width: min(100% - 22px, 1120px);
+        margin: 16px auto;
+      }
+
+      .hero {
+        padding: 26px 22px;
+      }
+
+      .brand-row,
+      .settings-card {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .workspace {
+        padding: 16px;
+      }
+
+      .editor-panel,
+      .control-panel {
+        padding: 16px;
+      }
+
+      #inputText {
+        min-height: 240px;
+        font-size: 0.98rem;
+      }
+
+      .action-buttons {
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand-logo {
+        width: 48px;
+        height: 48px;
+      }
+
+      .action-buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .section-label {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+      }
+    }
+
+
+    /* Responsive refinement for PC, tablets, and mobile phones */
+    html {
+      width: 100%;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      width: 100%;
+      overflow-x: hidden;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+
+    .page-shell {
+      width: min(1120px, calc(100vw - 32px));
+    }
+
+    .brand-mark {
+      min-width: 0;
+    }
+
+    .brand-mark > div:last-child {
+      min-width: 0;
+    }
+
+    .hero-note {
+      text-wrap: pretty;
+    }
+
+    .workspace {
+      display: grid;
+      gap: 14px;
+    }
+
+    #inputText {
+      min-height: clamp(220px, 42vh, 430px);
+      max-height: min(56vh, 520px);
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .prediction-panel,
+    .settings-card,
+    .panel {
+      min-width: 0;
+    }
+
+    #predictions {
+      overflow-x: auto;
+      scrollbar-width: thin;
+      padding-bottom: 2px;
+    }
+
+    .prediction-item {
+      flex: 0 0 auto;
+      max-width: 100%;
+      white-space: nowrap;
+    }
+
+    .action-buttons .btn {
+      white-space: nowrap;
+    }
+
+    @media (min-width: 1200px) {
+      .page-shell {
+        margin-top: 24px;
+        margin-bottom: 24px;
+      }
+
+      .workspace {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .brand-row {
+        align-items: flex-start;
+      }
+
+      .status-pill {
+        align-self: flex-start;
+      }
+
+      .hero-note {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        background:
+          radial-gradient(circle at top left, rgba(14, 165, 164, 0.12), transparent 42%),
+          linear-gradient(180deg, #f8fbff 0%, var(--page-bg) 100%);
+      }
+
+      .page-shell {
+        width: 100%;
+        margin: 0;
+      }
+
+      .app-frame {
+        min-height: 100dvh;
+        border: 0;
+        border-radius: 0;
+      }
+
+      .hero {
+        padding: 18px 16px 16px;
+      }
+
+      .brand-row {
+        gap: 12px;
+      }
+
+      .brand-mark {
+        gap: 10px;
+      }
+
+      .brand-logo {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        font-size: 1rem;
+      }
+
+      .eyebrow {
+        font-size: 0.68rem;
+        letter-spacing: 0.10em;
+      }
+
+      h1 {
+        font-size: clamp(1.45rem, 7vw, 1.9rem);
+        line-height: 1.08;
+      }
+
+      .hero-note {
+        margin-top: 10px;
+        font-size: 0.88rem;
+        line-height: 1.45;
+      }
+
+      .status-pill {
+        padding: 7px 11px;
+        font-size: 0.80rem;
+      }
+
+      .workspace {
+        padding: 12px;
+        gap: 12px;
+      }
+
+      .editor-panel,
+      .control-panel {
+        padding: 12px;
+        border-radius: 18px;
+      }
+
+      .section-label {
+        margin-bottom: 8px;
+      }
+
+      .section-label h2 {
+        font-size: 0.98rem;
+      }
+
+      .section-label span {
+        font-size: 0.78rem;
+      }
+
+      #inputText {
+        min-height: 42dvh;
+        max-height: 48dvh;
+        padding: 13px;
+        border-radius: 14px;
+        font-size: 0.96rem;
+        line-height: 1.55;
+      }
+
+      .prediction-panel {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 14px;
+      }
+
+      .prediction-title {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 3px;
+        font-size: 0.74rem;
+      }
+
+      #predictions {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+      }
+
+      .prediction-item {
+        padding: 7px 11px;
+        font-size: 0.88rem;
+      }
+
+      .action-buttons {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+      }
+
+      .action-buttons .btn {
+        min-height: 42px;
+        padding: 9px 8px;
+        border-radius: 11px;
+        font-size: 0.86rem;
+      }
+
+      .settings-card {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 14px;
+      }
+
+      .settings-copy {
+        min-width: 0;
+      }
+
+      .settings-copy strong {
+        font-size: 0.88rem;
+      }
+
+      .settings-copy span {
+        font-size: 0.75rem;
+        line-height: 1.35;
+      }
+
+      .form-check-label {
+        font-size: 0.82rem;
+      }
+
+      .footer {
+        padding-bottom: max(8px, env(safe-area-inset-bottom));
+        font-size: 0.78rem;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .hero {
+        padding: 16px 12px 14px;
+      }
+
+      .workspace {
+        padding: 10px;
+      }
+
+      .action-buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .settings-card {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      #inputText {
+        min-height: 40dvh;
+      }
+    }
+
+    @media (max-height: 620px) and (orientation: landscape) {
+      .page-shell {
+        width: min(1120px, calc(100vw - 20px));
+        margin: 10px auto;
+      }
+
+      .hero {
+        padding: 14px 18px;
+      }
+
+      .hero-note {
+        display: none;
+      }
+
+      .workspace {
+        padding: 12px;
+      }
+
+      #inputText {
+        min-height: 190px;
+        max-height: 45vh;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <main class="page-shell">
+    <section class="app-frame">
+      <header class="hero">
+        <div class="brand-row">
+          <div class="brand-mark">
+            <div class="brand-logo" aria-hidden="true">ST</div>
+            <div>
+              <p class="eyebrow">Smart Writing Tool</p>
+              <h1>Smart Text Assistant</h1>
+            </div>
+          </div>
+          <div class="status-pill"><span class="status-dot"></span> Ready for editing</div>
+        </div>
+        <p class="hero-note">Refine text, check grammar, export notes, and use smart word predictions from one focused workspace.</p>
+      </header>
+
+      <div class="workspace">
+        <section class="panel editor-panel">
+          <div class="section-label">
+            <h2>Document Workspace</h2>
+            <span>Type, paste, or edit your content below</span>
+          </div>
+
+          <div contenteditable="true" id="inputText" class="form-control" placeholder="Type or paste text here..."></div>
+
+          <div class="prediction-panel">
+            <div class="prediction-title">
+              <span>Smart Suggestions</span>
+              <span>Click a word to apply</span>
+            </div>
+            <div id="predictions"></div>
+          </div>
+        </section>
+
+        <section class="panel control-panel">
+          <div class="section-label">
+            <h2>Actions</h2>
+            <span>Grammar, clipboard, export, and voice tools</span>
+          </div>
+
+          <div class="action-buttons">
+            <button id="checkTextBtn" class="btn btn-primary">Check Grammar</button>
+            <button id="copyTextBtn" class="btn btn-info">Copy</button>
+            <button id="pasteTextBtn" class="btn btn-secondary">Paste</button>
+            <button id="clearTextBtn" class="btn btn-danger">Clear</button>
+            <button id="exportTextBtn" class="btn btn-success">Export</button>
+            <button id="speakTextBtn" class="btn btn-warning">Speak</button>
+          </div>
+
+          <div class="settings-card">
+            <div class="settings-copy">
+              <strong>Online word predictions</strong>
+              <span>Enable web-based suggestions when internet access is available.</span>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="onlinePredictionCheckbox">
+              <label class="form-check-label" for="onlinePredictionCheckbox">Enable</label>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="settings-copy">
+              <strong>Dark theme</strong>
+              <span>Switch to a darker workspace when you prefer a softer night view.</span>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="darkThemeCheckbox">
+              <label class="form-check-label" for="darkThemeCheckbox">Enable</label>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer">Smart Text Assistant</footer>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    let onlinePredictionEnabled = false;
+
+    function normalizeEditorText(text) {
+      return text.replace(/\u00A0/g, ' ');
+    }
+
+    // Grammar check using LanguageTool API
+    document.getElementById('checkTextBtn').addEventListener('click', async () => {
+      const inputEl = document.getElementById("inputText");
+      const text = normalizeEditorText(inputEl.innerText);
+
+      const response = await fetch("https://api.languagetool.org/v2/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ text, language: "en-US" })
+      });
+
+      if (!response.ok) {
+        alert("Error connecting to LanguageTool API.");
+        return;
+      }
+
+      const data = await response.json();
+      let correctedText = text;
+
+      data.matches.reverse().forEach(match => {
+        const start = match.offset;
+        const end = start + match.length;
+        const replacement = match.replacements[0]?.value || "";
+        correctedText = correctedText.slice(0, start) + replacement + correctedText.slice(end);
+      });
+
+      inputEl.innerText = correctedText;
+    });
+
+    // Copy
+    document.getElementById('copyTextBtn').addEventListener('click', async () => {
+      const text = normalizeEditorText(document.getElementById('inputText').innerText);
+      await navigator.clipboard.writeText(text);
+    });
+
+    // Paste
+    document.getElementById('pasteTextBtn').addEventListener('click', async () => {
+      const text = await navigator.clipboard.readText();
+      document.getElementById('inputText').innerText += text;
+    });
+
+    // Clear
+    document.getElementById('clearTextBtn').addEventListener('click', () => {
+      document.getElementById('inputText').innerText = '';
+    });
+
+    // Export
+    document.getElementById('exportTextBtn').addEventListener('click', () => {
+      const text = normalizeEditorText(document.getElementById('inputText').innerText);
+      const blob = new Blob([text], { type: 'application/msword' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'document.doc';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Speak
+    document.getElementById('speakTextBtn').addEventListener('click', () => {
+      const text = normalizeEditorText(document.getElementById('inputText').innerText);
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.pitch = 1.1;
+      utterance.rate = 0.95;
+      speechSynthesis.speak(utterance);
+    });
+
+// Fake Local DB words (simulate SQLite .db)
+const localDBWords = [
+"resident", "visitor", "guest", "employee", "staff", "security", "checkpoint", "patrol",
+"entry", "exit", "door", "gate", "lock", "alarm", "camera", "surveillance",
+"report", "incident", "suspicious", "activity", "vandalism", "theft", "breakin", "assault",
+"emergency", "fire", "medical", "hazard", "evacuation", "control", "monitoring", "log",
+"access", "badge", "keycard", "verification", "identification", "id", "watch", "shift",
+"round", "observation", "inspection", "violation", "rule", "policy", "procedure", "notice",
+"complaint", "disturbance", "noise", "parking", "vehicle", "license", "plate", "hallway",
+"corridor", "lobby", "elevator", "stairwell", "perimeter", "fence", "barrier", "lockdown",
+"intruder", "threat", "first", "aid", "extinguisher", "key", "logbook", "escort", "officer",
+"trigger", "safety", "watchtower", "canine", "response", "dispatch", "communication", "radio",
+"protocol", "alert", "perpetrator", "witness", "evidence", "floor", "unit", "apartment", "building",
+"complex", "compound", "entrance", "restricted", "area", "route", "check", "pass", "call",
+"turnstile", "siren", "team", "change", "post", "point", "panel", "station", "drill", "plan",
+"equipment", "sign", "package", "property", "item", "person", "detected", "breach", "clearance",
+"scan", "map", "guidelines", "registration", "code", "fob", "sensor", "glass", "list", "roster",
+"schedule", "audit", "infrared", "system", "checklist", "risk", "kit", "responder", "office",
+"center", "lighting", "meeting", "training", "preparedness", "lost", "found", "screening",
+"request", "approval", "device", "event", "message", "notification", "record", "contact",
+"number", "test", "monitor", "vehicle", "upgrade", "maintenance", "restriction", "zone",
+"ladder", "rounds", "notes", "patrolreport", "incidentreport", "securityreport", "firealarm",
+"safetydrill", "equipmentcheck", "alarmtest", "cameratest", "doortest", "locktest", "observationlog",
+"shiftlog", "dispatchlog", "monitoringlog", "patrollog", "notificationlog", "residentlog",
+"visitorlog", "employeelog", "guestlog", "officerlog", "alertlog", "incidentlog", "emergencylog",
+"vehicleroster", "securityroster", "staffroster", "shiftroster", "floorplan", "unitplan",
+"buildingplan", "compoundplan", "guideline", "hazardreport", "incidentnotes", "patrolnotes",
+"roundnotes", "monitoringnotes", "controlnotes", "lognotes", "observationnotes", "trainingprotocol",
+"dispatchprotocol", "checkprotocol", "alarmprotocol", "fireprotocol", "evacuationprotocol",
+"residentprotocol", "visitorprotocol", "staffprotocol", "employeeprotocol", "guestprotocol",
+"officerprotocol", "vehicleprotocol", "accessprotocol", "entryprotocol", "exitprotocol",
+"doorprotocol", "gateprotocol", "keyprotocol", "badgeprotocol", "keycardprotocol", "sensorprotocol",
+"camera", "alarmequipment", "doorlock", "gatelock", "barriergate", "turnstilegate", "kit",
+"firstaidkit", "firekit", "safetykit", "responderkit", "communicationkit", "dispatchkit",
+"vehiclekit", "equipmentkit", "inspectionkit", "patrolkit", "roundkit", "monitoringkit",
+"controlkit", "observationkit", "fireextinguisher", "emergencykit", "flashlight", "whistle",
+"radioequipment", "megaphone", "binoculars", "notebook", "pen", "cameraequipment", "locksmith",
+"masterkey", "keyring", "visitorbadge", "guestpass", "employeeid", "residentid", "securityid",
+"badgecheck", "keycheck", "doorcheck", "gatecheck", "entrycheck", "exitcheck", "vehiclecheck",
+"licensecheck", "floorcheck", "unitcheck", "buildingcheck", "compoundcheck", "patrolcheck",
+"roundcheck", "inspectioncheck", "monitorcheck", "controlcheck", "observationcheck", "logcheck",
+"auditcheck", "riskcheck", "equipmentcheck", "alarmsystem", "cctv", "motiondetector", "smokedetector",
+"firealarm", "sprinkler", "emergencyexit", "fireexit", "firedoor", "evacuationroute", "evacuationplan",
+"assemblypoint", "hazardsign", "warning", "caution", "danger", "safespot", "securityspot", "guardpost",
+"securityoffice", "controlroom", "monitoringstation", "dispatchcenter", "patrolstation", "observationtower",
+"watchtower", "canineunit", "firebrigade", "medicalteam", "ambulance", "firstresponder", "securityteam",
+"responseunit", "responderunit", "securityvehicle", "patrolvehicle", "emergencyvehicle", "firetruck",
+"ambulancevehicle", "communicationdevice", "walkietalkie", "megaphone", "alarmbell", "sirensystem",
+"fence", "barrier", "bollard", "turnstile", "securitygate", "doorlock", "emergencydoor", "mainentrance",
+"sideentrance", "rearentrance", "staircase", "elevator", "hallway", "corridor", "lobby", "reception",
+"waitingarea", "parkinglot", "driveway", "compound", "complex", "building", "unit", "apartment",
+"floor", "roof", "balcony", "terrace", "garden", "courtyard", "playground", "gym", "pool", "sauna",
+"maintenance", "cleaning", "repair", "renovation", "inspection", "checkup", "assessment", "risk",
+"safety", "security", "emergency", "incident", "alert", "notification", "communication", "report",
+"log", "note", "message", "call", "request", "approval", "policy", "procedure", "guideline",
+"rule", "regulation", "protocol", "standard", "compliance", "violation", "penalty", "warning",
+"caution", "hazard", "danger", "threat", "intruder", "suspicion", "unauthorized", "access",
+"breach", "alarm", "fire", "medical", "firstaid", "extinguisher", "responder", "patrol", "round",
+"monitor", "observe", "inspect", "check", "control", "dispatch", "team", "officer", "staff",
+"employee", "resident", "visitor", "guest", "person", "vehicle", "license", "plate", "badge",
+"keycard", "key", "lock", "door", "gate", "fence", "barrier", "turnstile", "camera", "cctv",
+"sensor", "motion", "smoke", "infrared", "alarmbell", "sirens", "megaphone", "radio", "communication",
+"notebook", "pen", "flashlight", "binoculars", "equipment", "kit", "tool", "inspection", "rounds",
+"patrols", "monitoring", "control", "observation", "notes", "reporting", "logbook", "record",
+"documentation", "emergencyplan", "evacuation", "route", "assembly", "point", "safe", "spot",
+"guard", "tower", "office", "station", "center", "compound", "complex", "building", "unit", "floor",
+"apartment", "balcony", "terrace", "garden", "courtyard", "playground", "gym", "pool", "sauna",
+"maintenance", "cleaning", "repair", "inspection", "assessment", "risk", "hazard", "alert",
+"notification", "incident", "emergency", "fire", "medical", "firstaid", "extinguisher", "responder",
+"patrol", "round", "monitor", "observe", "inspect", "check", "control", "dispatch", "team",
+"officer", "staff", "employee", "resident", "visitor", "guest", "person", "vehicle", "license",
+"plate", "badge", "keycard", "key", "lock", "door", "gate", "fence", "barrier", "turnstile",
+"camera", "cctv", "sensor", "motion", "smoke", "infrared", "alarmbell", "sirens", "megaphone",
+"radio", "communication", "notebook", "pen", "flashlight", "binoculars", "equipment", "kit",
+"tool", "inspection", "rounds", "patrols", "monitoring", "control", "observation", "notes",
+"reporting", "logbook", "record", "documentation", "emergencyplan", "evacuation", "route",
+"assembly", "point", "safe", "spot", "guard", "tower", "office", "station", "center"
+];
+
+
+
+    // Predictions (Online via Datamuse)
+    async function fetchOnlinePredictions(query) {
+      try {
+        const res = await fetch(`https://api.datamuse.com/sug?s=${query}`);
+        const data = await res.json();
+        return data.map(item => item.word);
+      } catch {
+        return [];
+      }
+    }
+
+    const inputTextEl = document.getElementById('inputText');
+    let lastEditorRange = null;
+
+    function saveEditorSelection() {
+      const selection = window.getSelection();
+      if (!selection.rangeCount) return;
+
+      const range = selection.getRangeAt(0);
+      if (inputTextEl.contains(range.startContainer)) {
+        lastEditorRange = range.cloneRange();
+      }
+    }
+
+    function restoreEditorSelection() {
+      if (!lastEditorRange) return false;
+
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(lastEditorRange);
+      return true;
+    }
+
+    function getWordInfoAtCursor() {
+      let selection = window.getSelection();
+
+      if ((!selection.rangeCount || !inputTextEl.contains(selection.getRangeAt(0).startContainer)) && lastEditorRange) {
+        restoreEditorSelection();
+        selection = window.getSelection();
+      }
+
+      if (!selection.rangeCount) return null;
+
+      const range = selection.getRangeAt(0);
+      const textNode = range.startContainer;
+      if (!textNode || textNode.nodeType !== Node.TEXT_NODE || !textNode.textContent) return null;
+
+      const textContent = textNode.textContent;
+      const pos = range.startOffset;
+      const regex = /\b\w+\b/g;
+      let match;
+
+      while ((match = regex.exec(textContent)) !== null) {
+        const start = match.index;
+        const end = start + match[0].length;
+        if (pos >= start && pos <= end) {
+          return { word: match[0], textNode, start, end };
+        }
+      }
+
+      return null;
+    }
+
+    function getWordAtCursor() {
+      return getWordInfoAtCursor()?.word || null;
+    }
+
+    async function showPredictionsForWord() {
+      const word = getWordAtCursor();
+      if (!word) return;
+
+      let predictions = localDBWords.filter(w => w.startsWith(word.toLowerCase())).slice(0,5);
+
+      if (onlinePredictionEnabled) {
+        const onlinePreds = await fetchOnlinePredictions(word);
+        predictions = [...new Set([...predictions, ...onlinePreds])];
+      }
+
+      showPredictions(predictions);
+    }
+
+    function showPredictions(predictions) {
+      const div = document.getElementById('predictions');
+      div.innerHTML = '';
+      predictions.forEach(word => {
+        const btn = document.createElement('button');
+        btn.className = 'prediction-item';
+        btn.textContent = word;
+
+        // Keep the cursor position inside the workspace when clicking a suggestion.
+        btn.addEventListener('mousedown', event => event.preventDefault());
+        btn.addEventListener('click', () => replaceWord(word));
+
+        div.appendChild(btn);
+      });
+    }
+
+    function replaceWord(newWord) {
+      restoreEditorSelection();
+
+      const wordInfo = getWordInfoAtCursor();
+      if (!wordInfo) {
+        inputTextEl.focus();
+        return;
+      }
+
+      const { textNode, start, end } = wordInfo;
+      const textContent = textNode.textContent;
+      const nextChar = textContent.charAt(end);
+
+      // Insert the selected suggestion and keep a ready space for the next word.
+      // A non-breaking space keeps the caret visibly after the inserted word in contenteditable fields.
+      const trailingSpace = nextChar && /\s/.test(nextChar) ? '' : '\u00A0';
+      const insertedText = newWord + trailingSpace;
+      textNode.textContent = textContent.slice(0, start) + insertedText + textContent.slice(end);
+
+      const caretPosition = start + insertedText.length;
+      const range = document.createRange();
+      range.setStart(textNode, caretPosition);
+      range.collapse(true);
+
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      lastEditorRange = range.cloneRange();
+
+      inputTextEl.focus();
+      activateTypingGlow();
+      document.getElementById('predictions').innerHTML = '';
+    }
+
+    let typingGlowTimer;
+
+    function activateTypingGlow() {
+      inputTextEl.classList.add('is-typing');
+      clearTimeout(typingGlowTimer);
+      typingGlowTimer = setTimeout(() => {
+        inputTextEl.classList.remove('is-typing');
+      }, 850);
+    }
+
+    inputTextEl.addEventListener('input', () => {
+      saveEditorSelection();
+      activateTypingGlow();
+      showPredictionsForWord();
+    });
+    inputTextEl.addEventListener('keyup', saveEditorSelection);
+    inputTextEl.addEventListener('mouseup', saveEditorSelection);
+    inputTextEl.addEventListener('click', () => {
+      saveEditorSelection();
+      showPredictionsForWord();
+    });
+
+    document.getElementById('onlinePredictionCheckbox').addEventListener('change', e => {
+      onlinePredictionEnabled = e.target.checked;
+    });
+
+
+    const darkThemeCheckbox = document.getElementById('darkThemeCheckbox');
+
+    function applyThemePreference(enabled) {
+      document.body.classList.toggle('dark-theme', enabled);
+      darkThemeCheckbox.checked = enabled;
+      localStorage.setItem('smartTextAssistantDarkTheme', enabled ? '1' : '0');
+    }
+
+    applyThemePreference(localStorage.getItem('smartTextAssistantDarkTheme') === '1');
+
+    darkThemeCheckbox.addEventListener('change', e => {
+      applyThemePreference(e.target.checked);
+    });
+  </script>
+</body>
+</html>
