@@ -466,10 +466,10 @@
     #inputText {
       display: block;
       width: 100%;
-      height: clamp(300px, 50vh, 560px) !important;
-      min-height: 300px !important;
-      max-height: min(62vh, 640px) !important;
-      overflow-y: scroll !important;
+      min-height: 320px !important;
+      height: auto !important;
+      max-height: none !important;
+      overflow-y: hidden !important;
       overflow-x: hidden !important;
       overscroll-behavior: contain;
       padding: 18px;
@@ -487,12 +487,11 @@
       overflow-wrap: anywhere;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.78);
       -webkit-overflow-scrolling: touch;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      scrollbar-gutter: stable both-edges;
+      transition: min-height 0.18s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
       scrollbar-width: thin;
       scrollbar-color: rgba(14, 165, 164, 0.86) rgba(148, 163, 184, 0.14);
       resize: none;
-      contain: layout paint;
+      contain: none;
     }
 
     #inputText::-webkit-scrollbar {
@@ -1282,7 +1281,7 @@
       .workspace { padding: 14px; gap: 14px; }
       .editor-panel, .side-panel { padding: 14px; }
       .action-buttons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      #inputText { height: 42dvh; min-height: 260px; max-height: 54dvh; }
+      #inputText { min-height: 300px !important; height: auto !important; max-height: none !important; }
     }
 
     @media (max-width: 560px) {
@@ -1300,7 +1299,7 @@
       .section-label span { text-align: left; font-size: 0.78rem; }
       .editor-toolbar { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; }
       .tool-btn { flex: 0 0 auto; min-height: 34px; font-size: 0.78rem; }
-      #inputText { height: 42dvh; min-height: 250px; max-height: 50dvh; padding: 13px; border-radius: 15px; font-size: 0.96rem; }
+      #inputText { min-height: 280px !important; height: auto !important; max-height: none !important; padding: 13px; border-radius: 15px; font-size: 0.96rem; }
       #predictions { flex-wrap: nowrap; }
       .translation-title {
         align-items: flex-start;
@@ -1337,7 +1336,7 @@
     @media (max-width: 380px) {
       .action-buttons { grid-template-columns: 1fr; }
       .settings-card { align-items: flex-start; flex-direction: column; }
-      #inputText { height: 40dvh; min-height: 230px; }
+      #inputText { min-height: 260px !important; height: auto !important; max-height: none !important; }
     }
 
     @media (max-height: 620px) and (orientation: landscape) {
@@ -1345,16 +1344,16 @@
       .hero { padding: 14px 18px; }
       .hero-note { display: none; }
       .workspace { padding: 12px; }
-      #inputText { height: 190px; min-height: 190px; max-height: 45vh; }
+      #inputText { min-height: 220px !important; height: auto !important; max-height: none !important; }
     }
 
-    /* Strong editor scroll lock: the workspace box never expands with long text */
+    /* Expandable editor: grows with content instead of locking text inside a fixed box */
     .editor-panel #inputText.form-control[contenteditable="true"] {
       display: block !important;
-      height: clamp(300px, 50vh, 560px) !important;
-      min-height: 300px !important;
-      max-height: min(62vh, 640px) !important;
-      overflow-y: scroll !important;
+      min-height: 320px !important;
+      height: auto !important;
+      max-height: none !important;
+      overflow-y: hidden !important;
       overflow-x: hidden !important;
       white-space: pre-wrap !important;
       overflow-wrap: anywhere !important;
@@ -1363,17 +1362,17 @@
 
     @media (max-width: 640px) {
       .editor-panel #inputText.form-control[contenteditable="true"] {
-        height: 42dvh !important;
-        min-height: 250px !important;
-        max-height: 50dvh !important;
+        min-height: 280px !important;
+        height: auto !important;
+        max-height: none !important;
       }
     }
 
     @media (max-height: 620px) and (orientation: landscape) {
       .editor-panel #inputText.form-control[contenteditable="true"] {
-        height: 190px !important;
-        min-height: 190px !important;
-        max-height: 45vh !important;
+        min-height: 220px !important;
+        height: auto !important;
+        max-height: none !important;
       }
     }
 
@@ -1497,8 +1496,7 @@
           <div class="brand-mark">
             <div class="brand-logo" aria-hidden="true">ST</div>
             <div>
-              <p class="eyebrow">Smart Writing Command Center</p>
-              <h1>Smart Text Assistant</h1>
+                            <h1>Smart Text Assistant</h1>
             </div>
           </div>
           <div class="hero-top-actions">
@@ -1526,7 +1524,7 @@
             <div class="command-group action-group">
               <div class="command-group-title"><span aria-hidden="true">⚡</span><strong>Actions</strong></div>
               <div class="action-buttons" aria-label="Action buttons">
-                <button id="checkTextBtn" class="btn btn-primary" type="button"><span class="btn-icon" aria-hidden="true">✓</span><span>Check Grammar</span></button>
+                <button id="checkTextBtn" class="btn btn-primary" type="button"><span class="btn-icon" aria-hidden="true">✓</span><span>Grammar</span></button>
                 <button id="translateEnglishBtn" class="btn btn-translate" type="button"><span class="btn-icon" aria-hidden="true">🌐</span><span>Translate to English</span></button>
                 <button id="copyTextBtn" class="btn btn-info" type="button"><span class="btn-icon" aria-hidden="true">📋</span><span>Copy</span></button>
                 <button id="pasteTextBtn" class="btn btn-secondary" type="button"><span class="btn-icon" aria-hidden="true">📥</span><span>Paste</span></button>
@@ -1933,6 +1931,14 @@
 
     const inputTextEl = document.getElementById('inputText');
     let lastEditorRange = null;
+
+    function expandDocumentWorkspace() {
+      if (!inputTextEl) return;
+      inputTextEl.style.height = 'auto';
+      const minimumHeight = window.matchMedia('(max-width: 640px)').matches ? 280 : 320;
+      const nextHeight = Math.max(minimumHeight, inputTextEl.scrollHeight + 2);
+      inputTextEl.style.height = `${nextHeight}px`;
+    }
     let typingGlowTimer;
     let autoSaveTimer;
     let grammarCheckTimer;
@@ -2345,6 +2351,20 @@
       URL.revokeObjectURL(url);
     }
 
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function buildSmallWordDocument(text) {
+      const safeText = escapeHtml(text).replace(/\n/g, '<br>');
+      return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Document</title><style>body{font-family:Arial,Helvetica,sans-serif;font-size:12pt;line-height:1.45;color:#000;}p{margin:0 0 8px 0;}</style></head><body><p>${safeText || '&nbsp;'}</p></body></html>`;
+    }
+
     document.querySelectorAll('[data-command]').forEach(btn => {
       btn.addEventListener('click', () => {
         inputTextEl.focus();
@@ -2498,7 +2518,12 @@
       showToast('Workspace cleared and saved draft deleted.', 'success');
     });
     document.getElementById('exportWordBtn').addEventListener('click', () => {
-      const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Smart Text Assistant Export</title></head><body>${inputTextEl.innerHTML}</body></html>`;
+      const text = getPlainText();
+      if (!text.trim()) return;
+
+      // Export as clean text-only Word-compatible HTML.
+      // This keeps the .doc file small because it removes browser/editor styles, scripts, images, and hidden formatting.
+      const html = buildSmallWordDocument(text);
       downloadFile('Smart_Text_Assistant_Document.doc', html, 'application/msword;charset=utf-8');
     });
 
@@ -2604,6 +2629,7 @@
 
     inputTextEl.addEventListener('input', () => {
       saveEditorSelection();
+      expandDocumentWorkspace();
       activateTypingGlow();
       updateStats();
       scheduleAutoSave();
@@ -2625,14 +2651,30 @@
       event.preventDefault();
       const text = (event.clipboardData || window.clipboardData).getData('text/plain');
       insertPlainTextAtCursor(text);
+      expandDocumentWorkspace();
       showToast('Pasted as clean readable text.', 'success', true);
     });
 
     loadStoredDraft();
+    expandDocumentWorkspace();
     updateStats();
+    window.addEventListener('resize', expandDocumentWorkspace);
     window.addEventListener('beforeunload', () => {
       if (inputTextEl.innerHTML.trim()) saveDraftNow();
     });
+
+    function enablePageScrollFromAnyPoint() {
+      document.addEventListener('wheel', event => {
+        if (event.ctrlKey) return;
+        const pageCanScroll = document.documentElement.scrollHeight > window.innerHeight + 2;
+        if (!pageCanScroll) return;
+        event.preventDefault();
+        window.scrollBy({ top: event.deltaY * 2.8, left: 0, behavior: 'auto' });
+      }, { passive: false });
+    }
+
+    enablePageScrollFromAnyPoint();
+
   </script>
 </body>
 </html>
