@@ -1,93 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Smart Text Assistant</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Smart Text Assistant Ultimate</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
     :root {
-      --corp-navy: #0f2742;
-      --corp-navy-2: #14365c;
-      --corp-blue: #2563eb;
-      --corp-cyan: #0ea5a4;
-      --corp-gold: #c89b3c;
-      --page-bg: #eef3f8;
-      --card-bg: #ffffff;
-      --text-main: #132238;
-      --text-muted: #64748b;
-      --line: #d9e2ec;
-      --line-strong: #b9c8d8;
-      --shadow-soft: 0 14px 34px rgba(15, 39, 66, 0.12);
-      --warm-glow: #f59e0b;
-      --warm-glow-soft: rgba(245, 158, 11, 0.24);
-      --warm-glow-faint: rgba(251, 191, 36, 0.14);
-      --shadow-small: 0 8px 20px rgba(15, 39, 66, 0.10);
-      --radius-lg: 24px;
+      --navy: #081f3a;
+      --navy-2: #0f3156;
+      --blue: #2563eb;
+      --cyan: #0ea5a4;
+      --teal: #14b8a6;
+      --gold: #f59e0b;
+      --green: #16a34a;
+      --red: #dc2626;
+      --purple: #7c3aed;
+      --page: #edf4fb;
+      --surface: rgba(255, 255, 255, 0.88);
+      --surface-solid: #ffffff;
+      --soft: #f7fbff;
+      --text: #122033;
+      --muted: #64748b;
+      --line: rgba(148, 163, 184, 0.34);
+      --line-strong: rgba(100, 116, 139, 0.34);
+      --shadow: 0 24px 70px rgba(8, 31, 58, 0.16);
+      --shadow-sm: 0 12px 28px rgba(8, 31, 58, 0.10);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
       --radius-md: 16px;
-      --radius-sm: 12px;
+      --focus: rgba(245, 158, 11, 0.22);
+      --glow: rgba(245, 158, 11, 0.36);
     }
 
     body.dark-theme {
-      --page-bg: #0b1220;
-      --card-bg: #111c2e;
-      --text-main: #e5edf7;
-      --text-muted: #9fb0c7;
-      --line: rgba(148, 163, 184, 0.28);
-      --line-strong: rgba(148, 163, 184, 0.44);
-      --shadow-soft: 0 16px 42px rgba(0, 0, 0, 0.38);
-      --shadow-small: 0 10px 28px rgba(0, 0, 0, 0.28);
+      --page: #07111f;
+      --surface: rgba(15, 23, 42, 0.86);
+      --surface-solid: #101b2d;
+      --soft: #0d1829;
+      --text: #e8f0fb;
+      --muted: #9fb1c7;
+      --line: rgba(148, 163, 184, 0.22);
+      --line-strong: rgba(148, 163, 184, 0.38);
+      --shadow: 0 26px 78px rgba(0, 0, 0, 0.42);
+      --shadow-sm: 0 14px 34px rgba(0, 0, 0, 0.30);
     }
 
-    * {
-      box-sizing: border-box;
+    * { box-sizing: border-box; }
+
+    html {
+      width: 100%;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
     }
 
     body {
-      margin: 0;
       min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--text);
       font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-      color: var(--text-main);
       background:
-        radial-gradient(circle at top left, rgba(14, 165, 164, 0.16), transparent 36%),
-        radial-gradient(circle at top right, rgba(37, 99, 235, 0.13), transparent 32%),
-        linear-gradient(180deg, #f8fbff 0%, var(--page-bg) 100%);
+        radial-gradient(circle at 8% 0%, rgba(20, 184, 166, 0.18), transparent 34%),
+        radial-gradient(circle at 92% 6%, rgba(37, 99, 235, 0.16), transparent 32%),
+        radial-gradient(circle at 54% 100%, rgba(245, 158, 11, 0.10), transparent 34%),
+        linear-gradient(180deg, #fbfdff 0%, var(--page) 100%);
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
     }
 
+    body.dark-theme {
+      background:
+        radial-gradient(circle at 8% 0%, rgba(20, 184, 166, 0.12), transparent 34%),
+        radial-gradient(circle at 92% 6%, rgba(37, 99, 235, 0.12), transparent 32%),
+        radial-gradient(circle at 54% 100%, rgba(245, 158, 11, 0.10), transparent 34%),
+        linear-gradient(180deg, #06101d 0%, var(--page) 100%);
+    }
+
+    button, input, select { font-family: inherit; }
+
     .page-shell {
-      width: min(1060px, calc(100% - 28px));
-      margin: 18px auto;
+      width: min(1180px, calc(100vw - 32px));
+      margin: 22px auto;
     }
 
     .app-frame {
       overflow: hidden;
-      border: 1px solid rgba(185, 200, 216, 0.65);
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.86);
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(14px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
     }
 
     .hero {
       position: relative;
-      padding: 24px 30px 22px;
+      overflow: hidden;
+      padding: 26px 30px 24px;
       color: #ffffff;
       background:
-        linear-gradient(135deg, rgba(15, 39, 66, 0.98), rgba(20, 54, 92, 0.96)),
-        linear-gradient(90deg, var(--corp-cyan), var(--corp-blue));
+        linear-gradient(135deg, rgba(8, 31, 58, 0.98), rgba(15, 49, 86, 0.96)),
+        linear-gradient(90deg, var(--cyan), var(--blue));
     }
 
+    .hero::before,
     .hero::after {
       content: '';
       position: absolute;
-      inset: auto -70px -105px auto;
-      width: 270px;
-      height: 270px;
       border-radius: 999px;
-      background: rgba(14, 165, 164, 0.22);
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 360px;
+      height: 360px;
+      right: -130px;
+      top: -160px;
+      background: rgba(20, 184, 166, 0.24);
+    }
+
+    .hero::after {
+      width: 260px;
+      height: 260px;
+      left: 46%;
+      bottom: -190px;
+      background: rgba(245, 158, 11, 0.18);
       filter: blur(2px);
+    }
+
+    .brand-row,
+    .hero-grid,
+    .hero-actions {
+      position: relative;
+      z-index: 1;
     }
 
     .brand-row {
@@ -95,132 +141,399 @@
       align-items: center;
       justify-content: space-between;
       gap: 18px;
-      position: relative;
-      z-index: 1;
+    }
+
+    .hero-top-actions {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: nowrap;
+      min-width: max-content;
+    }
+
+    .hero-top-actions .chip-btn,
+    .hero-top-actions .status-pill {
+      margin: 0;
+      white-space: nowrap;
     }
 
     .brand-mark {
       display: flex;
       align-items: center;
       gap: 14px;
+      min-width: 0;
     }
 
     .brand-logo {
       display: grid;
       place-items: center;
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--corp-cyan), #38bdf8);
+      flex: 0 0 auto;
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #16d7c3, #38bdf8);
       color: #ffffff;
-      font-weight: 800;
-      font-size: 1.15rem;
-      box-shadow: 0 12px 30px rgba(14, 165, 164, 0.32);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      box-shadow: 0 16px 34px rgba(20, 184, 166, 0.30);
     }
 
     .eyebrow {
       margin: 0 0 4px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.13em;
+      color: rgba(255, 255, 255, 0.70);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.72);
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(1.85rem, 3vw, 2.65rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-    }
-
-    .hero-note {
-      max-width: 720px;
-      margin: 12px 0 0;
-      position: relative;
-      z-index: 1;
-      color: rgba(255, 255, 255, 0.82);
-      font-size: 0.96rem;
-      line-height: 1.5;
+      font-size: clamp(1.85rem, 3vw, 2.75rem);
+      font-weight: 900;
+      letter-spacing: -0.055em;
+      line-height: 1.04;
     }
 
     .status-pill {
-      position: relative;
-      z-index: 1;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       min-width: max-content;
-      padding: 8px 13px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 9px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.20);
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.12);
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(255, 255, 255, 0.92);
       font-size: 0.88rem;
-      font-weight: 600;
+      font-weight: 700;
+      backdrop-filter: blur(10px);
     }
 
     .status-dot {
       width: 9px;
       height: 9px;
-      border-radius: 999px;
+      border-radius: 50%;
       background: #34d399;
-      box-shadow: 0 0 0 6px rgba(52, 211, 153, 0.12);
+      box-shadow: 0 0 0 6px rgba(52, 211, 153, 0.14);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: end;
+      margin-top: 16px;
+    }
+
+    .hero-note {
+      max-width: 740px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.96rem;
+      line-height: 1.55;
+      text-wrap: pretty;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      justify-content: flex-end;
+    }
+
+    .chip-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    }
+
+    .chip-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.34);
     }
 
     .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 16px;
       padding: 18px;
     }
 
-    .panel {
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      background: var(--card-bg);
-      box-shadow: var(--shadow-small);
+
+    .command-tray {
+      grid-column: 1 / -1;
+      padding: 14px;
+      background:
+        radial-gradient(circle at top left, rgba(14, 165, 164, 0.10), transparent 34%),
+        linear-gradient(180deg, var(--surface-solid), var(--soft));
+      border-color: rgba(14, 165, 164, 0.22);
     }
 
-    .editor-panel {
-      padding: 16px;
-    }
-
-    .section-label {
+    .command-tray-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 10px;
+      gap: 14px;
+      padding: 0 4px 12px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 12px;
+    }
+
+    .command-tray-head h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 1.05rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .tray-eyebrow {
+      margin: 0 0 2px;
+      color: var(--cyan);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+    }
+
+    .command-tray-head span {
+      max-width: 420px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 700;
+      line-height: 1.35;
+      text-align: right;
+    }
+
+    .command-tray-body {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .command-group {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 98px minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .command-group-title {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-height: 40px;
+      margin-bottom: 0;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: var(--surface-solid);
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1px solid var(--line);
+      white-space: nowrap;
+    }
+
+    .command-tray .editor-toolbar,
+    .command-tray .action-buttons {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 9px;
+      margin: 0;
+      padding: 2px 2px 5px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .command-tray .action-buttons .btn,
+    .command-tray .tool-btn {
+      flex: 0 0 auto;
+      min-height: 40px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow: 0 9px 18px rgba(8, 31, 58, 0.11);
+    }
+
+    .command-tray .action-buttons .btn {
+      min-width: max-content;
+    }
+
+    .command-tray .btn-icon {
+      width: 1.12em;
+      min-width: 1.12em;
+      height: 1.12em;
+      font-size: 1.04em;
+    }
+
+    body.dark-theme .command-tray-head h2 { color: #f8fafc; }
+    body.dark-theme .command-group { background: rgba(15, 23, 42, 0.54); }
+    body.dark-theme .command-group-title { background: rgba(15, 23, 42, 0.72); }
+
+    .panel {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface-solid);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .editor-panel,
+    .side-panel { padding: 16px; }
+
+    .section-label {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
     }
 
     .section-label h2 {
       margin: 0;
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      color: var(--corp-navy);
+      color: var(--navy);
+      font-size: 1.04rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
     }
 
+    body.dark-theme .section-label h2 { color: #f8fafc; }
+
     .section-label span {
-      color: var(--text-muted);
-      font-size: 0.88rem;
-      font-weight: 500;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .editor-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .tool-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 36px;
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .tool-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(14, 165, 164, 0.48);
+      box-shadow: 0 8px 18px rgba(14, 165, 164, 0.10);
     }
 
     #inputText {
+      display: block;
       width: 100%;
-      min-height: 270px;
-      max-height: 52vh;
-      overflow-y: auto;
-      padding: 16px;
-      font-size: 1.01rem;
-      line-height: 1.58;
+      height: clamp(300px, 50vh, 560px) !important;
+      min-height: 300px !important;
+      max-height: min(62vh, 640px) !important;
+      overflow-y: scroll !important;
+      overflow-x: hidden !important;
+      overscroll-behavior: contain;
+      padding: 18px;
       border: 1px solid var(--line);
-      border-radius: 16px;
+      border-radius: 18px;
       outline: none;
-      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
-      color: var(--text-main);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,251,255,0.96));
+      color: var(--text);
+      font-size: 1.02rem;
       font-weight: 500;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
-      transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, transform 0.22s ease;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.78);
+      -webkit-overflow-scrolling: touch;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      scrollbar-gutter: stable both-edges;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(14, 165, 164, 0.86) rgba(148, 163, 184, 0.14);
+      resize: none;
+      contain: layout paint;
+    }
+
+    #inputText::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    #inputText::-webkit-scrollbar-track {
+      background: rgba(148, 163, 184, 0.14);
+      border-radius: 999px;
+    }
+
+    #inputText::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(14, 165, 164, 0.78), rgba(37, 99, 235, 0.72));
+      border: 2px solid transparent;
+      border-radius: 999px;
+      background-clip: padding-box;
+    }
+
+    #inputText::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, rgba(14, 165, 164, 0.95), rgba(37, 99, 235, 0.92));
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+
+    body.dark-theme #inputText {
+      background: linear-gradient(180deg, #101c2f, #0f1a2c);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+
+    /* Keep pasted/plain/editor text readable in both themes */
+    #inputText,
+    #inputText * {
+      color: #111827 !important;
+      caret-color: #111827;
+    }
+
+    body.dark-theme #inputText,
+    body.dark-theme #inputText * {
+      color: #ffffff !important;
+      caret-color: #ffffff;
     }
 
     #inputText:empty::before {
@@ -230,43 +543,32 @@
     }
 
     #inputText:focus {
-      border-color: rgba(245, 158, 11, 0.95);
+      border-color: rgba(245, 158, 11, 0.96);
       background:
-        radial-gradient(circle at 18px 18px, rgba(251, 191, 36, 0.10), transparent 34%),
-        linear-gradient(180deg, #fffefa 0%, #ffffff 62%, #fff8ed 100%);
-      box-shadow:
-        0 0 0 4px var(--warm-glow-faint),
-        0 0 26px var(--warm-glow-soft),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        radial-gradient(circle at 24px 24px, rgba(251, 191, 36, 0.12), transparent 30%),
+        linear-gradient(180deg, #fffefa, #ffffff 62%, #fff7eb);
+      box-shadow: 0 0 0 4px var(--focus), 0 0 36px var(--glow), inset 0 1px 0 rgba(255,255,255,0.92);
     }
 
-    #inputText.is-typing {
-      animation: warmTypingGlow 1.15s ease-in-out infinite alternate;
-      border-color: rgba(245, 158, 11, 1);
+    body.dark-theme #inputText:focus {
+      background:
+        radial-gradient(circle at 24px 24px, rgba(251, 191, 36, 0.12), transparent 30%),
+        linear-gradient(180deg, #14223a, #101c2f 62%, #201d23);
     }
+
+    #inputText.is-typing { animation: warmTypingGlow 1.15s ease-in-out infinite alternate; }
 
     @keyframes warmTypingGlow {
-      from {
-        box-shadow:
-          0 0 0 4px rgba(251, 191, 36, 0.12),
-          0 0 20px rgba(245, 158, 11, 0.20),
-          inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      }
-      to {
-        box-shadow:
-          0 0 0 5px rgba(251, 191, 36, 0.18),
-          0 0 38px rgba(245, 158, 11, 0.38),
-          0 0 70px rgba(251, 146, 60, 0.16),
-          inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      }
+      from { box-shadow: 0 0 0 4px rgba(251,191,36,0.12), 0 0 20px rgba(245,158,11,0.20), inset 0 1px 0 rgba(255,255,255,0.70); }
+      to { box-shadow: 0 0 0 5px rgba(251,191,36,0.18), 0 0 40px rgba(245,158,11,0.38), 0 0 74px rgba(251,146,60,0.16), inset 0 1px 0 rgba(255,255,255,0.70); }
     }
 
     .prediction-panel {
       margin-top: 12px;
-      padding: 13px 14px 10px;
+      padding: 12px;
       border: 1px dashed var(--line-strong);
       border-radius: var(--radius-md);
-      background: #f8fbff;
+      background: var(--soft);
     }
 
     .prediction-title {
@@ -274,12 +576,12 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      margin-bottom: 8px;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
+      margin-bottom: 9px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 900;
       letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     #predictions {
@@ -288,175 +590,40 @@
       gap: 8px;
       min-height: 36px;
       align-items: center;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      padding-bottom: 2px;
     }
 
     #predictions:empty::before {
-      content: 'Start typing to show word suggestions';
+      content: 'Start typing to show smarter word suggestions';
       color: #94a3b8;
-      font-size: 0.94rem;
-      font-weight: 500;
-      text-transform: none;
+      font-size: 0.9rem;
+      font-weight: 600;
       letter-spacing: normal;
+      text-transform: none;
     }
 
     .prediction-item {
-      cursor: pointer;
+      flex: 0 0 auto;
+      max-width: 100%;
       padding: 7px 13px;
-      border-radius: 999px;
       border: 1px solid rgba(14, 165, 164, 0.18);
-      background: #e9fbfa;
+      border-radius: 999px;
+      background: #e8fbf8;
       color: #0f766e;
-      font-size: 0.94rem;
-      font-weight: 700;
+      font-size: 0.9rem;
+      font-weight: 900;
+      white-space: nowrap;
+      cursor: pointer;
       transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
     }
 
     .prediction-item:hover {
       transform: translateY(-2px);
       border-color: rgba(14, 165, 164, 0.42);
-      background: #d6f7f5;
-      box-shadow: 0 8px 16px rgba(14, 165, 164, 0.16);
-    }
-
-    .control-panel {
-      margin-top: 14px;
-      padding: 16px;
-    }
-
-    .action-buttons {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(120px, 1fr));
-      gap: 12px;
-    }
-
-    .action-buttons .btn {
-      min-height: 40px;
-      border: 0;
-      border-radius: 13px;
-      font-size: 0.94rem;
-      font-weight: 800;
-      letter-spacing: 0.01em;
-      box-shadow: 0 10px 22px rgba(15, 39, 66, 0.12);
-      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
-    }
-
-    .action-buttons .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 26px rgba(15, 39, 66, 0.18);
-      filter: brightness(1.02);
-    }
-
-    .btn-primary { background: linear-gradient(135deg, #1d4ed8, #2563eb); }
-    .btn-info { background: linear-gradient(135deg, #0891b2, #06b6d4); color: #fff; }
-    .btn-secondary { background: linear-gradient(135deg, #475569, #64748b); }
-    .btn-danger { background: linear-gradient(135deg, #b91c1c, #ef4444); }
-    .btn-success { background: linear-gradient(135deg, #047857, #10b981); }
-    .btn-warning { background: linear-gradient(135deg, #b7791f, #f59e0b); color: #fff; }
-
-    .settings-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-top: 12px;
-      padding: 12px 14px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      background: #f8fbff;
-    }
-
-    .settings-copy strong {
-      display: block;
-      color: var(--corp-navy);
-      font-size: 0.96rem;
-      font-weight: 800;
-    }
-
-    .settings-copy span {
-      display: block;
-      margin-top: 2px;
-      color: var(--text-muted);
-      font-size: 0.88rem;
-    }
-
-    .form-check {
-      margin: 0;
-      min-width: max-content;
-    }
-
-    .form-check-input {
-      width: 2.6em;
-      height: 1.35em;
-      cursor: pointer;
-      border-color: var(--line-strong);
-    }
-
-    .form-check-input:checked {
-      background-color: var(--corp-cyan);
-      border-color: var(--corp-cyan);
-    }
-
-    .form-check-input:focus {
-      box-shadow: 0 0 0 4px rgba(14, 165, 164, 0.13);
-      border-color: var(--corp-cyan);
-    }
-
-    .form-check-label {
-      margin-left: 8px;
-      color: var(--corp-navy);
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .footer {
-      margin-top: 10px;
-      padding: 10px 6px 2px;
-      color: var(--text-muted);
-      text-align: center;
-      font-size: 0.88rem;
-      font-weight: 500;
-    }
-
-    body.dark-theme {
-      background:
-        radial-gradient(circle at top left, rgba(14, 165, 164, 0.10), transparent 36%),
-        radial-gradient(circle at top right, rgba(245, 158, 11, 0.10), transparent 32%),
-        linear-gradient(180deg, #08111f 0%, var(--page-bg) 100%);
-    }
-
-    body.dark-theme .app-frame {
-      border-color: rgba(148, 163, 184, 0.22);
-      background: rgba(15, 23, 42, 0.86);
-    }
-
-    body.dark-theme .hero {
-      background:
-        linear-gradient(135deg, rgba(7, 18, 34, 0.98), rgba(17, 34, 58, 0.96)),
-        linear-gradient(90deg, var(--corp-cyan), var(--corp-blue));
-    }
-
-    body.dark-theme .section-label h2,
-    body.dark-theme .settings-copy strong,
-    body.dark-theme .form-check-label {
-      color: #f8fafc;
-    }
-
-    body.dark-theme #inputText {
-      background: linear-gradient(180deg, #0f1b2d 0%, #101d31 100%);
-      color: #f8fafc;
-      border-color: rgba(148, 163, 184, 0.30);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    }
-
-    body.dark-theme #inputText:focus {
-      background:
-        radial-gradient(circle at 18px 18px, rgba(251, 191, 36, 0.10), transparent 34%),
-        linear-gradient(180deg, #13213a 0%, #101d31 62%, #1c1a22 100%);
-    }
-
-    body.dark-theme .prediction-panel,
-    body.dark-theme .settings-card {
-      background: rgba(15, 23, 42, 0.74);
+      background: #d7f7f3;
+      box-shadow: 0 10px 18px rgba(14, 165, 164, 0.16);
     }
 
     body.dark-theme .prediction-item {
@@ -465,360 +632,859 @@
       color: #8ff5e8;
     }
 
-    body.dark-theme .prediction-item:hover {
-      background: rgba(20, 184, 166, 0.22);
+    .translation-panel {
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: linear-gradient(180deg, rgba(255,255,255,0.86), var(--soft));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.75);
     }
 
-    @media (max-width: 992px) {
-      .action-buttons {
-        grid-template-columns: repeat(3, minmax(130px, 1fr));
-      }
+    .translation-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 9px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
-    @media (max-width: 768px) {
-      .page-shell {
-        width: min(100% - 22px, 1120px);
-        margin: 16px auto;
-      }
-
-      .hero {
-        padding: 26px 22px;
-      }
-
-      .brand-row,
-      .settings-card {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .workspace {
-        padding: 16px;
-      }
-
-      .editor-panel,
-      .control-panel {
-        padding: 16px;
-      }
-
-      #inputText {
-        min-height: 240px;
-        font-size: 0.98rem;
-      }
-
-      .action-buttons {
-        grid-template-columns: repeat(2, minmax(120px, 1fr));
-      }
+    .translation-title-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
-    @media (max-width: 480px) {
-      .brand-logo {
-        width: 48px;
-        height: 48px;
-      }
-
-      .action-buttons {
-        grid-template-columns: 1fr;
-      }
-
-      .section-label {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 5px;
-      }
+    .mini-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 30px;
+      padding: 6px 10px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #0891b2, #06b6d4);
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 900;
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow: 0 8px 18px rgba(8, 145, 178, 0.18);
+      transition: transform 0.18s ease, filter 0.18s ease, opacity 0.18s ease;
     }
 
+    .mini-action-btn:hover { transform: translateY(-1px); filter: brightness(1.03); }
+    .mini-action-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
 
-    /* Responsive refinement for PC, tablets, and mobile phones */
-    html {
+    #translationText {
       width: 100%;
-      overflow-x: hidden;
-      -webkit-text-size-adjust: 100%;
-    }
-
-    body {
-      width: 100%;
-      overflow-x: hidden;
-      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-    }
-
-    .page-shell {
-      width: min(1120px, calc(100vw - 32px));
-    }
-
-    .brand-mark {
-      min-width: 0;
-    }
-
-    .brand-mark > div:last-child {
-      min-width: 0;
-    }
-
-    .hero-note {
-      text-wrap: pretty;
-    }
-
-    .workspace {
-      display: grid;
-      gap: 14px;
-    }
-
-    #inputText {
-      min-height: clamp(220px, 42vh, 430px);
-      max-height: min(56vh, 520px);
+      min-height: 145px;
+      max-height: 260px;
+      overflow-y: auto;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      outline: none;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      color: var(--text);
+      font-size: 0.98rem;
+      font-weight: 500;
+      line-height: 1.58;
+      direction: ltr;
+      text-align: left;
       white-space: pre-wrap;
       word-break: break-word;
       overflow-wrap: anywhere;
+      user-select: text;
       -webkit-overflow-scrolling: touch;
     }
 
-    .prediction-panel,
-    .settings-card,
-    .panel {
-      min-width: 0;
+    #translationText:empty::before {
+      content: attr(data-placeholder);
+      color: #94a3b8;
+      pointer-events: none;
     }
 
-    #predictions {
-      overflow-x: auto;
-      scrollbar-width: thin;
-      padding-bottom: 2px;
+    body.dark-theme .translation-panel {
+      background: rgba(15, 23, 42, 0.74);
     }
 
-    .prediction-item {
-      flex: 0 0 auto;
-      max-width: 100%;
-      white-space: nowrap;
+    body.dark-theme #translationText {
+      background: linear-gradient(180deg, #0f1b2d 0%, #101d31 100%);
+      color: #f8fafc;
+      border-color: rgba(148, 163, 184, 0.30);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .stat-card {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--soft);
+    }
+
+    .stat-card strong {
+      display: block;
+      color: var(--navy);
+      font-size: 1.35rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    body.dark-theme .stat-card strong { color: #f8fafc; }
+
+    .stat-card span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .select-row {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .select-row label {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .smart-select {
+      width: 100%;
+      min-height: 42px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--soft);
+      color: var(--text);
+      font-weight: 800;
+      outline: none;
+    }
+
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
     }
 
     .action-buttons .btn {
-      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      border: 0;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 900;
+      letter-spacing: 0.005em;
+      box-shadow: 0 12px 22px rgba(8, 31, 58, 0.12);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
     }
 
-    @media (min-width: 1200px) {
-      .page-shell {
-        margin-top: 24px;
-        margin-bottom: 24px;
-      }
-
-      .workspace {
-        padding: 20px;
-      }
+    .btn-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 1.25em;
+      min-width: 1.25em;
+      height: 1.25em;
+      line-height: 1;
+      font-size: 1.02em;
     }
 
-    @media (max-width: 900px) {
-      .brand-row {
-        align-items: flex-start;
-      }
-
-      .status-pill {
-        align-self: flex-start;
-      }
-
-      .hero-note {
-        max-width: 100%;
-      }
+    .stat-card.grammar-stat {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(239, 68, 68, 0.08));
+      border-color: rgba(245, 158, 11, 0.34);
     }
 
-    @media (max-width: 640px) {
-      body {
-        background:
-          radial-gradient(circle at top left, rgba(14, 165, 164, 0.12), transparent 42%),
-          linear-gradient(180deg, #f8fbff 0%, var(--page-bg) 100%);
-      }
+    .stat-card.grammar-stat strong {
+      color: #b45309;
+    }
 
-      .page-shell {
-        width: 100%;
-        margin: 0;
-      }
+    body.dark-theme .stat-card.grammar-stat {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.16), rgba(239, 68, 68, 0.10));
+      border-color: rgba(245, 158, 11, 0.30);
+    }
 
-      .app-frame {
-        min-height: 100dvh;
-        border: 0;
-        border-radius: 0;
-      }
+    .grammar-box {
+      grid-column: 1 / -1;
+      padding: 13px 14px;
+    }
 
-      .hero {
-        padding: 18px 16px 16px;
-      }
+    .grammar-box-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
 
-      .brand-row {
-        gap: 12px;
-      }
+    .grammar-box-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 10px;
+      background: rgba(245, 158, 11, 0.16);
+    }
 
-      .brand-mark {
-        gap: 10px;
-      }
+    .grammar-values {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
 
-      .brand-logo {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-        font-size: 1rem;
-      }
+    .grammar-values > div {
+      padding: 11px 12px;
+      border: 1px solid rgba(245, 158, 11, 0.24);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.56);
+    }
 
-      .eyebrow {
-        font-size: 0.68rem;
-        letter-spacing: 0.10em;
-      }
+    body.dark-theme .grammar-values > div {
+      background: rgba(15, 23, 42, 0.42);
+      border-color: rgba(245, 158, 11, 0.22);
+    }
 
-      h1 {
-        font-size: clamp(1.45rem, 7vw, 1.9rem);
-        line-height: 1.08;
-      }
+    .grammar-box small {
+      display: block;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
 
-      .hero-note {
-        margin-top: 10px;
-        font-size: 0.88rem;
-        line-height: 1.45;
-      }
+    .action-buttons .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 28px rgba(8, 31, 58, 0.18);
+      filter: brightness(1.03);
+    }
 
-      .status-pill {
-        padding: 7px 11px;
-        font-size: 0.80rem;
-      }
+    .btn-primary { background: linear-gradient(135deg, #1d4ed8, #2563eb); }
+    .btn-info { background: linear-gradient(135deg, #0891b2, #06b6d4); }
+    .btn-secondary { background: linear-gradient(135deg, #475569, #64748b); }
+    .btn-danger { background: linear-gradient(135deg, #b91c1c, #ef4444); }
+    .btn-success { background: linear-gradient(135deg, #047857, #10b981); }
+    .btn-warning { background: linear-gradient(135deg, #b7791f, #f59e0b); color: #ffffff; }
+.btn-darkblue { background: linear-gradient(135deg, #0f2742, #1e3a5f); }
 
-      .workspace {
-        padding: 12px;
-        gap: 12px;
-      }
+    #inputText.rtl-mode {
+      direction: rtl;
+      text-align: right;
+      unicode-bidi: plaintext;
+      font-family: 'Inter', 'Segoe UI', Tahoma, Arial, sans-serif;
+    }
 
-      .editor-panel,
-      .control-panel {
-        padding: 12px;
-        border-radius: 18px;
-      }
+    #inputText.ltr-mode {
+      direction: ltr;
+      text-align: left;
+      unicode-bidi: plaintext;
+    }
 
-      .section-label {
-        margin-bottom: 8px;
-      }
+    .language-hint {
+      margin-top: -6px;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
 
-      .section-label h2 {
-        font-size: 0.98rem;
-      }
+    .btn-translate { background: linear-gradient(135deg, #7c3aed, #ec4899); }
 
-      .section-label span {
-        font-size: 0.78rem;
-      }
 
-      #inputText {
-        min-height: 42dvh;
-        max-height: 48dvh;
-        padding: 13px;
-        border-radius: 14px;
-        font-size: 0.96rem;
-        line-height: 1.55;
-      }
+    .settings-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--soft);
+    }
 
-      .prediction-panel {
-        margin-top: 10px;
-        padding: 10px;
-        border-radius: 14px;
-      }
+    .settings-copy strong {
+      display: block;
+      color: var(--navy);
+      font-size: 0.92rem;
+      font-weight: 900;
+    }
 
-      .prediction-title {
+    body.dark-theme .settings-copy strong { color: #f8fafc; }
+
+    .settings-copy span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .auto-save-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-width: max-content;
+      padding: 8px 12px;
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.12);
+      color: #047857;
+      font-size: 0.84rem;
+      font-weight: 900;
+    }
+
+    body.dark-theme .auto-save-badge {
+      border-color: rgba(52, 211, 153, 0.30);
+      background: rgba(16, 185, 129, 0.16);
+      color: #86efac;
+    }
+
+    .form-check { margin: 0; min-width: max-content; }
+    .form-check-input { width: 2.65em; height: 1.38em; cursor: pointer; border-color: var(--line-strong); }
+    .form-check-input:checked { background-color: var(--cyan); border-color: var(--cyan); }
+    .form-check-input:focus { box-shadow: 0 0 0 4px rgba(14, 165, 164, 0.13); border-color: var(--cyan); }
+    .form-check-label { margin-left: 7px; color: var(--text); font-size: 0.86rem; font-weight: 900; cursor: pointer; }
+
+    .insight-box {
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid rgba(245, 158, 11, 0.24);
+      border-radius: 16px;
+      background: rgba(245, 158, 11, 0.08);
+      color: var(--text);
+      font-size: 0.84rem;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .footer {
+      grid-column: 1 / -1;
+      padding: 5px 2px 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .toast-wrap {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      right: auto;
+      bottom: auto;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      gap: 10px;
+      width: min(420px, calc(100vw - 32px));
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+    }
+
+    .smart-toast {
+      width: max-content;
+      max-width: 100%;
+      padding: 14px 18px;
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 18px;
+      text-align: center;
+      background: rgba(8, 31, 58, 0.94);
+      color: #ffffff;
+      box-shadow: 0 16px 34px rgba(0,0,0,0.24);
+      font-size: 0.86rem;
+      font-weight: 800;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: toastQuickIn 0.18s ease-out forwards, toastQuickOut 0.28s ease-in forwards 1.45s;
+    }
+
+    .smart-toast.success { background: rgba(4, 120, 87, 0.95); }
+    .smart-toast.warning { background: rgba(180, 83, 9, 0.95); }
+    .smart-toast.error { background: rgba(153, 27, 27, 0.96); }
+    .smart-toast.info { background: rgba(8, 31, 58, 0.94); }
+
+    @keyframes toastQuickIn {
+      from { transform: translateY(12px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes toastQuickOut {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(10px); opacity: 0; }
+    }
+
+    .confirm-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(3, 7, 18, 0.58);
+      backdrop-filter: blur(8px);
+    }
+
+    .confirm-overlay.show { display: flex; }
+
+    .confirm-modal {
+      width: min(430px, 100%);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--surface-solid);
+      color: var(--text);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
+      transform: scale(0.96) translateY(10px);
+      opacity: 0;
+      animation: modalIn 0.18s ease-out forwards;
+    }
+
+    @keyframes modalIn {
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .confirm-modal__head {
+      padding: 20px 22px 12px;
+      background:
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.15), transparent 42%),
+        linear-gradient(135deg, rgba(8, 31, 58, 0.06), rgba(14, 165, 164, 0.08));
+    }
+
+    .confirm-icon {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 12px;
+      border-radius: 14px;
+      background: rgba(245, 158, 11, 0.16);
+      color: #b45309;
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+
+    .confirm-title {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .confirm-message {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .confirm-modal__actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 16px 22px 20px;
+    }
+
+    .modal-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 102px;
+      min-height: 40px;
+      border: 0;
+      border-radius: 13px;
+      font-size: 0.88rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform .16s ease, filter .16s ease, box-shadow .16s ease;
+    }
+
+    .modal-btn:hover { transform: translateY(-1px); filter: brightness(1.02); }
+    .modal-btn.cancel { background: var(--soft); color: var(--text); border: 1px solid var(--line); }
+    .modal-btn.confirm { background: linear-gradient(135deg, #b91c1c, #ef4444); color: #fff; box-shadow: 0 10px 22px rgba(220, 38, 38, 0.22); }
+
+
+
+    .disclaimer-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10001;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(3, 7, 18, 0.60);
+      backdrop-filter: blur(9px);
+    }
+
+    .disclaimer-overlay.show { display: flex; }
+
+    .disclaimer-modal {
+      width: min(620px, 100%);
+      max-height: min(86vh, 720px);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: var(--surface-solid);
+      color: var(--text);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.36);
+      transform: scale(0.96) translateY(10px);
+      opacity: 0;
+      animation: modalIn 0.18s ease-out forwards;
+    }
+
+    .disclaimer-modal__head {
+      padding: 20px 22px 14px;
+      background:
+        radial-gradient(circle at top right, rgba(14, 165, 164, 0.16), transparent 42%),
+        linear-gradient(135deg, rgba(8, 31, 58, 0.07), rgba(245, 158, 11, 0.08));
+      border-bottom: 1px solid var(--line);
+    }
+
+    .disclaimer-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .disclaimer-icon {
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 44px;
+      height: 44px;
+      border-radius: 15px;
+      background: rgba(14, 165, 164, 0.16);
+      color: #0f766e;
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+
+    .disclaimer-title {
+      margin: 0;
+      font-size: 1.18rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .disclaimer-subtitle {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.90rem;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .disclaimer-modal__body {
+      max-height: 50vh;
+      overflow-y: auto;
+      padding: 18px 22px;
+      scrollbar-width: thin;
+    }
+
+    .disclaimer-modal__body p,
+    .disclaimer-modal__body li {
+      color: var(--text);
+      font-size: 0.92rem;
+      font-weight: 600;
+      line-height: 1.55;
+    }
+
+    .disclaimer-modal__body ul {
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+
+    .disclaimer-modal__actions {
+      display: flex;
+      justify-content: flex-end;
+      padding: 16px 22px 20px;
+      border-top: 1px solid var(--line);
+      background: var(--soft);
+    }
+
+    .modal-btn.accept {
+      background: linear-gradient(135deg, #047857, #10b981);
+      color: #ffffff;
+      box-shadow: 0 10px 22px rgba(16, 185, 129, 0.22);
+    }
+
+    body.dark-theme .disclaimer-modal {
+      background: #111c2f;
+      border-color: rgba(148, 163, 184, 0.24);
+    }
+
+    body.dark-theme .disclaimer-modal__head {
+      background:
+        radial-gradient(circle at top right, rgba(14, 165, 164, 0.12), transparent 42%),
+        linear-gradient(135deg, rgba(148, 163, 184, 0.05), rgba(245, 158, 11, 0.08));
+    }
+
+    body.dark-theme .disclaimer-modal__actions {
+      background: rgba(15, 23, 42, 0.74);
+    }
+
+    body.dark-theme .confirm-modal__head {
+      background:
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.13), transparent 42%),
+        linear-gradient(135deg, rgba(148, 163, 184, 0.05), rgba(14, 165, 164, 0.08));
+    }
+
+    @media (max-width: 1160px) {
+      .command-tray-body { grid-template-columns: 1fr; }
+      .command-tray .action-buttons { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 1060px) {
+      .workspace { grid-template-columns: 1fr; }
+      .side-panel { order: 2; }
+      .action-buttons { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 780px) {
+      .page-shell { width: min(100% - 20px, 1180px); margin: 14px auto; }
+      .hero { padding: 22px 18px; }
+      .brand-row, .hero-grid { grid-template-columns: 1fr; flex-direction: column; align-items: flex-start; }
+      .hero-grid { display: grid; gap: 14px; }
+      .hero-actions { justify-content: flex-start; }
+      .workspace { padding: 14px; gap: 14px; }
+      .editor-panel, .side-panel { padding: 14px; }
+      .action-buttons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #inputText { height: 42dvh; min-height: 260px; max-height: 54dvh; }
+    }
+
+    @media (max-width: 560px) {
+      .page-shell { width: 100%; margin: 0; }
+      .app-frame { min-height: 100dvh; border: 0; border-radius: 0; }
+      .hero { padding: 18px 14px 16px; }
+      .brand-logo { width: 44px; height: 44px; border-radius: 14px; }
+      .eyebrow { font-size: 0.66rem; letter-spacing: 0.10em; }
+      h1 { font-size: clamp(1.42rem, 7vw, 1.9rem); }
+      .status-pill { padding: 7px 11px; font-size: 0.78rem; }
+      .hero-note { font-size: 0.86rem; }
+      .workspace { padding: 11px; gap: 11px; }
+      .editor-panel, .side-panel { padding: 11px; border-radius: 18px; }
+      .section-label { flex-direction: column; gap: 4px; }
+      .section-label span { text-align: left; font-size: 0.78rem; }
+      .editor-toolbar { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; }
+      .tool-btn { flex: 0 0 auto; min-height: 34px; font-size: 0.78rem; }
+      #inputText { height: 42dvh; min-height: 250px; max-height: 50dvh; padding: 13px; border-radius: 15px; font-size: 0.96rem; }
+      #predictions { flex-wrap: nowrap; }
+      .translation-title {
         align-items: flex-start;
         flex-direction: column;
-        gap: 3px;
-        font-size: 0.74rem;
+        gap: 7px;
       }
 
-      #predictions {
-        flex-wrap: nowrap;
-        justify-content: flex-start;
+      .translation-title-actions {
+        width: 100%;
+        justify-content: space-between;
       }
 
-      .prediction-item {
-        padding: 7px 11px;
-        font-size: 0.88rem;
+      #translationText {
+        min-height: 120px;
+        max-height: 220px;
+        font-size: 0.94rem;
       }
 
-      .action-buttons {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 9px;
-      }
-
-      .action-buttons .btn {
-        min-height: 42px;
-        padding: 9px 8px;
-        border-radius: 11px;
-        font-size: 0.86rem;
-      }
-
-      .settings-card {
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
-        padding: 10px;
-        border-radius: 14px;
-      }
-
-      .settings-copy {
-        min-width: 0;
-      }
-
-      .settings-copy strong {
-        font-size: 0.88rem;
-      }
-
-      .settings-copy span {
-        font-size: 0.75rem;
-        line-height: 1.35;
-      }
-
-      .form-check-label {
-        font-size: 0.82rem;
-      }
-
-      .footer {
-        padding-bottom: max(8px, env(safe-area-inset-bottom));
-        font-size: 0.78rem;
-      }
+      .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      .stat-card { padding: 10px; }
+      .stat-card strong { font-size: 1.18rem; }
+      .action-buttons { gap: 8px; }
+      .action-buttons .btn { min-height: 42px; padding: 8px; font-size: 0.82rem; border-radius: 12px; }
+      .settings-card { padding: 10px; align-items: center; }
+      .settings-copy span { display: none; }
+      .footer { padding-bottom: max(8px, env(safe-area-inset-bottom)); }
+      .toast-wrap { width: min(420px, calc(100vw - 24px)); }
+      .confirm-overlay { padding: 12px; }
+      .confirm-modal__head { padding: 18px 18px 10px; }
+      .confirm-modal__actions { padding: 14px 18px 18px; }
+      .modal-btn { flex: 1; }
     }
 
     @media (max-width: 380px) {
-      .hero {
-        padding: 16px 12px 14px;
-      }
+      .action-buttons { grid-template-columns: 1fr; }
+      .settings-card { align-items: flex-start; flex-direction: column; }
+      #inputText { height: 40dvh; min-height: 230px; }
+    }
 
-      .workspace {
-        padding: 10px;
-      }
+    @media (max-height: 620px) and (orientation: landscape) {
+      .page-shell { width: min(1180px, calc(100vw - 20px)); margin: 10px auto; }
+      .hero { padding: 14px 18px; }
+      .hero-note { display: none; }
+      .workspace { padding: 12px; }
+      #inputText { height: 190px; min-height: 190px; max-height: 45vh; }
+    }
 
-      .action-buttons {
-        grid-template-columns: 1fr;
-      }
+    /* Strong editor scroll lock: the workspace box never expands with long text */
+    .editor-panel #inputText.form-control[contenteditable="true"] {
+      display: block !important;
+      height: clamp(300px, 50vh, 560px) !important;
+      min-height: 300px !important;
+      max-height: min(62vh, 640px) !important;
+      overflow-y: scroll !important;
+      overflow-x: hidden !important;
+      white-space: pre-wrap !important;
+      overflow-wrap: anywhere !important;
+      word-break: break-word !important;
+    }
 
-      .settings-card {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      #inputText {
-        min-height: 40dvh;
+    @media (max-width: 640px) {
+      .editor-panel #inputText.form-control[contenteditable="true"] {
+        height: 42dvh !important;
+        min-height: 250px !important;
+        max-height: 50dvh !important;
       }
     }
 
     @media (max-height: 620px) and (orientation: landscape) {
-      .page-shell {
-        width: min(1120px, calc(100vw - 20px));
-        margin: 10px auto;
+      .editor-panel #inputText.form-control[contenteditable="true"] {
+        height: 190px !important;
+        min-height: 190px !important;
+        max-height: 45vh !important;
       }
+    }
 
-      .hero {
-        padding: 14px 18px;
-      }
+    .progress-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10020;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(3, 7, 18, 0.62);
+      backdrop-filter: blur(9px);
+    }
 
-      .hero-note {
-        display: none;
-      }
+    .progress-overlay.show { display: flex; }
 
-      .workspace {
-        padding: 12px;
-      }
+    .progress-modal {
+      width: min(460px, 100%);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--surface-solid);
+      color: var(--text);
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.36);
+      animation: modalIn 0.18s ease-out forwards;
+    }
 
-      #inputText {
-        min-height: 190px;
-        max-height: 45vh;
-      }
+    .progress-modal__head {
+      padding: 22px 24px 18px;
+      background:
+        radial-gradient(circle at top right, rgba(124, 58, 237, 0.18), transparent 42%),
+        linear-gradient(135deg, rgba(8, 31, 58, 0.06), rgba(14, 165, 164, 0.10));
+    }
+
+    .progress-icon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 12px;
+      border-radius: 16px;
+      background: rgba(124, 58, 237, 0.14);
+      color: var(--purple);
+      font-size: 1.35rem;
+      animation: progressPulse 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes progressPulse {
+      from { transform: scale(1); opacity: 0.72; }
+      to { transform: scale(1.06); opacity: 1; }
+    }
+
+    .progress-title {
+      margin: 0;
+      font-size: 1.18rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .progress-message {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.93rem;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .progress-bar-shell {
+      height: 11px;
+      margin-top: 18px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.20);
+    }
+
+    .progress-bar-fill {
+      width: 35%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--cyan), var(--purple), #ec4899);
+      animation: progressMove 1.05s ease-in-out infinite;
+    }
+
+    @keyframes progressMove {
+      0% { transform: translateX(-110%); }
+      55% { transform: translateX(85%); }
+      100% { transform: translateX(250%); }
+    }
+
+    body.dark-theme .progress-modal {
+      background: #111c2f;
+      border-color: rgba(148, 163, 184, 0.24);
+    }
+
+  
+    @media (max-width: 780px) {
+      .command-tray { padding: 12px; }
+      .command-tray-head { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .command-tray-head span { max-width: 100%; text-align: left; }
+      .command-group { grid-template-columns: 88px minmax(0, 1fr); gap: 9px; padding: 10px; }
+      .command-group-title { min-height: 36px; font-size: 0.70rem; padding: 0 10px; }
+      .command-tray .action-buttons,
+      .command-tray .editor-toolbar { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+      .command-tray .action-buttons .btn,
+      .command-tray .tool-btn { min-height: 36px; padding: 7px 11px; font-size: 0.78rem; }
+    }
+
+    @media (max-width: 420px) {
+      .command-group { grid-template-columns: 1fr; align-items: start; }
+      .command-group-title { width: max-content; }
     }
 
   </style>
@@ -831,55 +1497,127 @@
           <div class="brand-mark">
             <div class="brand-logo" aria-hidden="true">ST</div>
             <div>
-              <p class="eyebrow">Smart Writing Tool</p>
+              <p class="eyebrow">Smart Writing Command Center</p>
               <h1>Smart Text Assistant</h1>
             </div>
           </div>
-          <div class="status-pill"><span class="status-dot"></span> Ready for editing</div>
+          <div class="hero-top-actions">
+            <div class="status-pill"><span class="status-dot"></span><span id="saveStatus">Ready</span></div>
+            <button class="chip-btn" id="focusModeBtn" type="button" aria-pressed="false"><span class="btn-icon" aria-hidden="true">🎯</span><span>Focus Mode</span></button>
+            <button class="chip-btn" id="disclaimerBtn" type="button"><span class="btn-icon" aria-hidden="true">⚖️</span><span>Disclaimer</span></button>
+          </div>
         </div>
-        <p class="hero-note">Refine text, check grammar, export notes, and use smart word predictions from one focused workspace.</p>
+        <div class="hero-grid">
+          <p class="hero-note">A polished responsive workspace for writing, grammar checking, smart predictions, translation, and live document insights.</p>
+        </div>
       </header>
 
       <div class="workspace">
+        <section class="panel command-tray" aria-label="Professional buttons tray">
+          <div class="command-tray-head">
+            <div>
+              <p class="tray-eyebrow">Quick Command Tray</p>
+              <h2>Writing Tools & Actions</h2>
+            </div>
+            
+          </div>
+
+          <div class="command-tray-body">
+            <div class="command-group action-group">
+              <div class="command-group-title"><span aria-hidden="true">⚡</span><strong>Actions</strong></div>
+              <div class="action-buttons" aria-label="Action buttons">
+                <button id="checkTextBtn" class="btn btn-primary" type="button"><span class="btn-icon" aria-hidden="true">✓</span><span>Check Grammar</span></button>
+                <button id="translateEnglishBtn" class="btn btn-translate" type="button"><span class="btn-icon" aria-hidden="true">🌐</span><span>Translate to English</span></button>
+                <button id="copyTextBtn" class="btn btn-info" type="button"><span class="btn-icon" aria-hidden="true">📋</span><span>Copy</span></button>
+                <button id="pasteTextBtn" class="btn btn-secondary" type="button"><span class="btn-icon" aria-hidden="true">📥</span><span>Paste</span></button>
+                <button id="clearTextBtn" class="btn btn-danger" type="button"><span class="btn-icon" aria-hidden="true">🗑️</span><span>Clear</span></button>
+                <button id="exportWordBtn" class="btn btn-success" type="button"><span class="btn-icon" aria-hidden="true">📄</span><span>Export to Word Document</span></button>
+                <button id="selectAllBtn" class="btn btn-darkblue" type="button"><span class="btn-icon" aria-hidden="true">☑️</span><span>Select</span></button>
+              </div>
+            </div>
+
+            <div class="command-group format-group">
+              <div class="command-group-title"><span aria-hidden="true">✍️</span><strong>Format</strong></div>
+              <div class="editor-toolbar" aria-label="Format buttons">
+                <button class="tool-btn" type="button" data-command="bold"><span class="btn-icon" aria-hidden="true">𝐁</span><span>Bold</span></button>
+                <button class="tool-btn" type="button" data-command="italic"><span class="btn-icon" aria-hidden="true">𝐼</span><span>Italic</span></button>
+                <button class="tool-btn" type="button" data-command="insertUnorderedList"><span class="btn-icon" aria-hidden="true">•</span><span>Bullets</span></button>
+                <button class="tool-btn" type="button" data-command="insertOrderedList"><span class="btn-icon" aria-hidden="true">1.</span><span>Numbers</span></button>
+                <button class="tool-btn" type="button" id="lettersListBtn"><span class="btn-icon" aria-hidden="true">a.</span><span>Letters</span></button>
+                <button class="tool-btn" type="button" id="sentenceCaseBtn"><span class="btn-icon" aria-hidden="true">Aa</span><span>Sentence Case</span></button>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section class="panel editor-panel">
           <div class="section-label">
             <h2>Document Workspace</h2>
-            <span>Type, paste, or edit your content below</span>
+            <span>Type, paste, polish, or export your content</span>
           </div>
 
-          <div contenteditable="true" id="inputText" class="form-control" placeholder="Type or paste text here..."></div>
+          <div contenteditable="true" id="inputText" class="form-control" role="textbox" aria-multiline="true" spellcheck="true" placeholder="Type or paste text here..."></div>
 
           <div class="prediction-panel">
             <div class="prediction-title">
               <span>Smart Suggestions</span>
-              <span>Click a word to apply</span>
+              <span>Click a word to insert + keep space</span>
             </div>
             <div id="predictions"></div>
           </div>
+
+          <div class="translation-panel" aria-label="English translation output">
+            <div class="translation-title">
+              <span>English Translation</span>
+              <div class="translation-title-actions">
+                <span id="translationStatus">Translation only</span>
+                <button id="copyTranslationBtn" class="mini-action-btn" type="button" disabled><span class="btn-icon" aria-hidden="true">📋</span><span>Copy Translation</span></button>
+              </div>
+            </div>
+            <div id="translationText" class="form-control translation-box" role="textbox" aria-multiline="true" aria-readonly="true" tabindex="0" data-placeholder="Arabic or Urdu translation to English will appear here..."></div>
+          </div>
         </section>
 
-        <section class="panel control-panel">
+        <aside class="panel side-panel">
           <div class="section-label">
-            <h2>Actions</h2>
-            <span>Grammar, clipboard, export, and voice tools</span>
+            <h2>Smart Controls</h2>
+            <span>Actions and live insights</span>
           </div>
 
-          <div class="action-buttons">
-            <button id="checkTextBtn" class="btn btn-primary">Check Grammar</button>
-            <button id="copyTextBtn" class="btn btn-info">Copy</button>
-            <button id="pasteTextBtn" class="btn btn-secondary">Paste</button>
-            <button id="clearTextBtn" class="btn btn-danger">Clear</button>
-            <button id="exportTextBtn" class="btn btn-success">Export</button>
-            <button id="speakTextBtn" class="btn btn-warning">Speak</button>
+          <div class="stats-grid" aria-label="Document statistics">
+            <div class="stat-card"><strong id="wordCount">0</strong><span>Words</span></div>
+            <div class="stat-card"><strong id="charCount">0</strong><span>Characters</span></div>
+            <div class="stat-card"><strong id="sentenceCount">0</strong><span>Sentences</span></div>
+            <div class="stat-card"><strong id="readingTime">0m</strong><span>Read Time</span></div>
+            <div class="stat-card grammar-stat grammar-box" aria-live="polite">
+              <div class="grammar-box-head">
+                <span class="grammar-box-icon" aria-hidden="true">⚠️</span>
+                <span>Grammar Check</span>
+              </div>
+              <div class="grammar-values">
+                <div><strong id="grammarErrorCount">0</strong><span>Error</span></div>
+                <div><strong id="grammarNowCount">0</strong><span>Now</span></div>
+              </div>
+              <small id="grammarLiveStatus">Live check ready</small>
+            </div>
           </div>
 
+          <div class="select-row">
+            <label for="typingLanguageSelect">Typing Language</label>
+            <select id="typingLanguageSelect" class="smart-select">
+              <option value="en">English - Left to Right</option>
+              <option value="ar">Arabic - Right to Left</option>
+              <option value="ur">Urdu - Right to Left</option>
+            </select>
+          </div>
+          <div class="language-hint" id="languageHint">English typing mode is active. Grammar checking and smart suggestions are available.</div>
           <div class="settings-card">
             <div class="settings-copy">
               <strong>Online word predictions</strong>
-              <span>Enable web-based suggestions when internet access is available.</span>
+              <span>Uses web suggestions when internet access is available.</span>
             </div>
             <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="onlinePredictionCheckbox">
+              <input class="form-check-input" type="checkbox" role="switch" id="onlinePredictionCheckbox" />
               <label class="form-check-label" for="onlinePredictionCheckbox">Enable</label>
             </div>
           </div>
@@ -887,96 +1625,320 @@
           <div class="settings-card">
             <div class="settings-copy">
               <strong>Dark theme</strong>
-              <span>Switch to a darker workspace when you prefer a softer night view.</span>
+              <span>Switch to a comfortable darker workspace.</span>
             </div>
             <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="darkThemeCheckbox">
+              <input class="form-check-input" type="checkbox" role="switch" id="darkThemeCheckbox" />
               <label class="form-check-label" for="darkThemeCheckbox">Enable</label>
             </div>
           </div>
-        </section>
 
-        <footer class="footer">Smart Text Assistant</footer>
+          <div class="settings-card">
+            <div class="settings-copy">
+              <strong>Auto save</strong>
+              <span>Always stores and recovers your draft in this browser until you click Clear.</span>
+            </div>
+            <div class="auto-save-badge" aria-label="Auto save is always on">
+              <span aria-hidden="true">💾</span> Always On
+            </div>
+          </div>
+
+          <div class="insight-box" id="smartInsight">Start writing to see a live writing insight.</div>
+        </aside>
+
+        <footer class="footer">Smart Text Assistant Ultimate Design • Responsive PC, tablet, and mobile layout</footer>
       </div>
     </section>
   </main>
 
+  <div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
+
+  <div class="confirm-overlay" id="confirmOverlay" aria-hidden="true">
+    <section class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmMessage">
+      <div class="confirm-modal__head">
+        <div class="confirm-icon" aria-hidden="true">!</div>
+        <h2 class="confirm-title" id="confirmTitle">Confirm Action</h2>
+        <p class="confirm-message" id="confirmMessage">Please confirm this action.</p>
+      </div>
+      <div class="confirm-modal__actions">
+        <button class="modal-btn cancel" id="confirmCancelBtn" type="button"><span class="btn-icon" aria-hidden="true">✕</span><span>Cancel</span></button>
+        <button class="modal-btn confirm" id="confirmOkBtn" type="button"><span class="btn-icon" aria-hidden="true">✓</span><span>Confirm</span></button>
+      </div>
+    </section>
+  </div>
+
+  <div class="disclaimer-overlay" id="disclaimerOverlay" aria-hidden="true">
+    <section class="disclaimer-modal" role="dialog" aria-modal="true" aria-labelledby="disclaimerTitle" aria-describedby="disclaimerText">
+      <div class="disclaimer-modal__head">
+        <div class="disclaimer-title-row">
+          <div class="disclaimer-icon" aria-hidden="true">⚖️</div>
+          <div>
+            <h2 class="disclaimer-title" id="disclaimerTitle">Disclaimer & Terms of Use</h2>
+            <p class="disclaimer-subtitle">Please review before relying on any generated, corrected, or translated text.</p>
+          </div>
+        </div>
+      </div>
+      <div class="disclaimer-modal__body" id="disclaimerText">
+        <p>This tool is provided for writing assistance, grammar checking, formatting, and translation support only. It is not a substitute for professional legal, technical, medical, financial, or official advice.</p>
+        <ul>
+          <li>The developer does not guarantee that grammar corrections, translations, suggestions, exported documents, or generated text are complete, accurate, legally valid, or suitable for every purpose.</li>
+          <li>The user is fully responsible for reviewing, verifying, approving, and using the final text before sending, publishing, submitting, or relying on it.</li>
+          <li>The developer is not responsible for any loss, damage, misunderstanding, rejected document, wrong translation, missing information, data issue, or decision made from using this tool.</li>
+          <li>Do not enter confidential, sensitive, or restricted information unless you are permitted to process it and accept the related risk.</li>
+          <li>External services used for grammar checking, suggestions, or translation may be unavailable, delayed, inaccurate, or subject to their own terms and privacy practices.</li>
+        </ul>
+      </div>
+      <div class="disclaimer-modal__actions">
+        <button class="modal-btn accept" id="disclaimerCloseBtn" type="button"><span class="btn-icon" aria-hidden="true">✓</span><span>I Understand</span></button>
+      </div>
+    </section>
+  </div>
+
+
+  <div class="progress-overlay" id="translationProgressOverlay" aria-hidden="true">
+    <section class="progress-modal" role="dialog" aria-modal="true" aria-labelledby="translationProgressTitle" aria-describedby="translationProgressMessage">
+      <div class="progress-modal__head">
+        <div class="progress-icon" aria-hidden="true">🌐</div>
+        <h2 class="progress-title" id="translationProgressTitle">Translation in Progress</h2>
+        <p class="progress-message" id="translationProgressMessage">Preparing Arabic/Urdu text and translating it to English...</p>
+        <div class="progress-bar-shell" aria-hidden="true"><div class="progress-bar-fill"></div></div>
+      </div>
+    </section>
+  </div>
+
   <script>
     let onlinePredictionEnabled = false;
+    const STORAGE_KEY = 'smartTextAssistantUltimateDraft';
+    const THEME_KEY = 'smartTextAssistantDarkTheme';
+    const LANGUAGE_KEY = 'smartTextAssistantTypingLanguage';
 
     function normalizeEditorText(text) {
-      return text.replace(/\u00A0/g, ' ');
+      return text.replace(/ /g, ' ').replace(/[ \t]+\n/g, '\n');
     }
 
-    // Grammar check using LanguageTool API
-    document.getElementById('checkTextBtn').addEventListener('click', async () => {
-      const inputEl = document.getElementById("inputText");
-      const text = normalizeEditorText(inputEl.innerText);
+    function getPlainText() {
+      return normalizeEditorText(inputTextEl.innerText || '');
+    }
 
-      const response = await fetch("https://api.languagetool.org/v2/check", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ text, language: "en-US" })
+    function showToast(message, type = 'info', allowFeedback = false) {
+      // Feedback is intentionally limited to Copy/Paste actions only.
+      if (!allowFeedback) return;
+      const wrap = document.getElementById('toastWrap');
+      wrap.innerHTML = '';
+      const toast = document.createElement('div');
+      toast.className = `smart-toast ${type}`;
+      toast.textContent = message;
+      wrap.appendChild(toast);
+      setTimeout(() => toast.remove(), 1800);
+    }
+
+    function showConfirmModal({ title = 'Confirm Action', message = 'Please confirm this action.', confirmText = 'Confirm', cancelText = 'Cancel', danger = true } = {}) {
+      return new Promise(resolve => {
+        const overlay = document.getElementById('confirmOverlay');
+        const titleEl = document.getElementById('confirmTitle');
+        const messageEl = document.getElementById('confirmMessage');
+        const okBtn = document.getElementById('confirmOkBtn');
+        const cancelBtn = document.getElementById('confirmCancelBtn');
+
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        okBtn.innerHTML = `<span class="btn-icon" aria-hidden="true">✓</span><span>${confirmText}</span>`;
+        cancelBtn.innerHTML = `<span class="btn-icon" aria-hidden="true">✕</span><span>${cancelText}</span>`;
+        okBtn.style.background = danger
+          ? 'linear-gradient(135deg, #b91c1c, #ef4444)'
+          : 'linear-gradient(135deg, #047857, #10b981)';
+
+        const close = result => {
+          overlay.classList.remove('show');
+          overlay.setAttribute('aria-hidden', 'true');
+          document.removeEventListener('keydown', onKeyDown);
+          okBtn.removeEventListener('click', onConfirm);
+          cancelBtn.removeEventListener('click', onCancel);
+          overlay.removeEventListener('click', onOverlayClick);
+          resolve(result);
+        };
+
+        const onConfirm = () => close(true);
+        const onCancel = () => close(false);
+        const onOverlayClick = event => { if (event.target === overlay) close(false); };
+        const onKeyDown = event => {
+          if (event.key === 'Escape') close(false);
+          if (event.key === 'Enter') close(true);
+        };
+
+        okBtn.addEventListener('click', onConfirm);
+        cancelBtn.addEventListener('click', onCancel);
+        overlay.addEventListener('click', onOverlayClick);
+        document.addEventListener('keydown', onKeyDown);
+
+        overlay.classList.add('show');
+        overlay.setAttribute('aria-hidden', 'false');
+        setTimeout(() => cancelBtn.focus(), 0);
       });
+    }
 
-      if (!response.ok) {
-        alert("Error connecting to LanguageTool API.");
+    function setStatus(message) {
+      document.getElementById('saveStatus').textContent = message;
+    }
+
+    function getSelectedTypingLanguage() {
+      return document.getElementById('typingLanguageSelect')?.value || 'en';
+    }
+
+    function applyTypingLanguage(language) {
+      const select = document.getElementById('typingLanguageSelect');
+      const hint = document.getElementById('languageHint');
+      const isRtl = language === 'ar' || language === 'ur';
+      const names = { en: 'English', ar: 'Arabic', ur: 'Urdu' };
+
+      if (select) select.value = language;
+      inputTextEl.classList.toggle('rtl-mode', isRtl);
+      inputTextEl.classList.toggle('ltr-mode', !isRtl);
+      inputTextEl.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+      inputTextEl.setAttribute('lang', language);
+      inputTextEl.style.direction = isRtl ? 'rtl' : 'ltr';
+      inputTextEl.style.textAlign = isRtl ? 'right' : 'left';
+      inputTextEl.setAttribute('placeholder', isRtl ? 'اكتب أو الصق النص هنا...' : 'Type or paste text here...');
+
+      if (hint) {
+        hint.textContent = isRtl
+          ? `${names[language]} typing mode is active. Text direction is right to left. Use Translate to English to convert it to English.`
+          : 'English typing mode is active. Grammar checking and smart suggestions are available.';
+      }
+
+      localStorage.setItem(LANGUAGE_KEY, language);
+      if (isRtl) {
+        setGrammarCounts(0, 0, 'Translate to English for grammar count');
+        showPredictions([]);
+      } else {
+        scheduleLiveGrammarCheck();
+      }
+      inputTextEl.focus();
+    }
+
+    function splitTextForTranslation(text, maxLength = 450) {
+      const lines = text.split(/(\n+)/);
+      const chunks = [];
+      let current = '';
+      for (const part of lines) {
+        if ((current + part).length <= maxLength) {
+          current += part;
+        } else {
+          if (current.trim()) chunks.push(current);
+          if (part.length <= maxLength) {
+            current = part;
+          } else {
+            for (let i = 0; i < part.length; i += maxLength) chunks.push(part.slice(i, i + maxLength));
+            current = '';
+          }
+        }
+      }
+      if (current.trim()) chunks.push(current);
+      return chunks.length ? chunks : [text];
+    }
+
+    async function translateChunkToEnglish(chunk, sourceLanguage) {
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(chunk)}&langpair=${encodeURIComponent(sourceLanguage + '|en')}`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Translation connection failed');
+      const data = await response.json();
+      const translated = data?.responseData?.translatedText;
+      if (!translated) throw new Error('Translation response was empty');
+      return translated;
+    }
+
+    function setTranslationText(text = '') {
+      const translationEl = document.getElementById('translationText');
+      const statusEl = document.getElementById('translationStatus');
+      const copyBtn = document.getElementById('copyTranslationBtn');
+      if (!translationEl) return;
+
+      translationEl.innerText = text;
+      translationEl.setAttribute('dir', 'ltr');
+      translationEl.setAttribute('lang', 'en');
+      translationEl.style.direction = 'ltr';
+      translationEl.style.textAlign = 'left';
+
+      const hasText = Boolean(text.trim());
+      if (statusEl) statusEl.textContent = hasText ? 'Ready to copy' : 'Translation only';
+      if (copyBtn) copyBtn.disabled = !hasText;
+    }
+
+    function getTranslationText() {
+      return normalizeEditorText(document.getElementById('translationText')?.innerText || '');
+    }
+
+    function showTranslationProgress(message = 'Preparing Arabic/Urdu text and translating it to English...') {
+      const overlay = document.getElementById('translationProgressOverlay');
+      const msg = document.getElementById('translationProgressMessage');
+      if (msg) msg.textContent = message;
+      if (!overlay) return;
+      overlay.classList.add('show');
+      overlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function updateTranslationProgress(message) {
+      const msg = document.getElementById('translationProgressMessage');
+      if (msg) msg.textContent = message;
+    }
+
+    function hideTranslationProgress() {
+      const overlay = document.getElementById('translationProgressOverlay');
+      if (!overlay) return;
+      overlay.classList.remove('show');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+
+    async function translateWorkspaceToEnglish() {
+      const sourceLanguage = getSelectedTypingLanguage();
+      const text = getPlainText().trim();
+      if (!text) {
+        showToast('Please type Arabic or Urdu text before translating.', 'warning');
+        return;
+      }
+      if (sourceLanguage === 'en') {
+        showToast('Typing language is already English.', 'info');
         return;
       }
 
-      const data = await response.json();
-      let correctedText = text;
+      const btn = document.getElementById('translateEnglishBtn');
+      const originalHtml = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<span class="btn-icon" aria-hidden="true">⏳</span><span>Translating</span>';
+      setStatus('Translating...');
+      showTranslationProgress('Starting translation. Please keep this page open...');
 
-      data.matches.reverse().forEach(match => {
-        const start = match.offset;
-        const end = start + match.length;
-        const replacement = match.replacements[0]?.value || "";
-        correctedText = correctedText.slice(0, start) + replacement + correctedText.slice(end);
-      });
+      try {
+        const chunks = splitTextForTranslation(text);
+        const translatedChunks = [];
+        for (let index = 0; index < chunks.length; index += 1) {
+          updateTranslationProgress(`Translating part ${index + 1} of ${chunks.length} to English...`);
+          translatedChunks.push(await translateChunkToEnglish(chunks[index], sourceLanguage));
+        }
+        updateTranslationProgress('Finalizing English translation...');
+        const translatedText = translatedChunks.join('');
+        setTranslationText(translatedText);
+        setStatus('Ready');
+        showToast('Translated to English successfully. Translation is shown in the English Translation box.', 'success');
+      } catch {
+        setStatus('Ready');
+        showToast('Translation service is not reachable. Please check your internet connection.', 'error');
+      } finally {
+        hideTranslationProgress();
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+        inputTextEl.focus();
+      }
+    }
 
-      inputEl.innerText = correctedText;
-    });
+    const inputTextEl = document.getElementById('inputText');
+    let lastEditorRange = null;
+    let typingGlowTimer;
+    let autoSaveTimer;
+    let grammarCheckTimer;
+    let grammarRequestId = 0;
 
-    // Copy
-    document.getElementById('copyTextBtn').addEventListener('click', async () => {
-      const text = normalizeEditorText(document.getElementById('inputText').innerText);
-      await navigator.clipboard.writeText(text);
-    });
-
-    // Paste
-    document.getElementById('pasteTextBtn').addEventListener('click', async () => {
-      const text = await navigator.clipboard.readText();
-      document.getElementById('inputText').innerText += text;
-    });
-
-    // Clear
-    document.getElementById('clearTextBtn').addEventListener('click', () => {
-      document.getElementById('inputText').innerText = '';
-    });
-
-    // Export
-    document.getElementById('exportTextBtn').addEventListener('click', () => {
-      const text = normalizeEditorText(document.getElementById('inputText').innerText);
-      const blob = new Blob([text], { type: 'application/msword' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'document.doc';
-      a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    // Speak
-    document.getElementById('speakTextBtn').addEventListener('click', () => {
-      const text = normalizeEditorText(document.getElementById('inputText').innerText);
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.pitch = 1.1;
-      utterance.rate = 0.95;
-      speechSynthesis.speak(utterance);
-    });
-
-// Fake Local DB words (simulate SQLite .db)
-const localDBWords = [
+    const localDBWords = [
 "resident", "visitor", "guest", "employee", "staff", "security", "checkpoint", "patrol",
 "entry", "exit", "door", "gate", "lock", "alarm", "camera", "surveillance",
 "report", "incident", "suspicious", "activity", "vandalism", "theft", "breakin", "assault",
@@ -1054,26 +2016,22 @@ const localDBWords = [
 "assembly", "point", "safe", "spot", "guard", "tower", "office", "station", "center"
 ];
 
+    const uniqueLocalWords = [...new Set(localDBWords.map(w => String(w).toLowerCase()))].sort();
 
-
-    // Predictions (Online via Datamuse)
     async function fetchOnlinePredictions(query) {
       try {
-        const res = await fetch(`https://api.datamuse.com/sug?s=${query}`);
+        const res = await fetch(`https://api.datamuse.com/sug?s=${encodeURIComponent(query)}`);
+        if (!res.ok) return [];
         const data = await res.json();
-        return data.map(item => item.word);
+        return data.map(item => item.word).filter(Boolean);
       } catch {
         return [];
       }
     }
 
-    const inputTextEl = document.getElementById('inputText');
-    let lastEditorRange = null;
-
     function saveEditorSelection() {
       const selection = window.getSelection();
       if (!selection.rangeCount) return;
-
       const range = selection.getRangeAt(0);
       if (inputTextEl.contains(range.startContainer)) {
         lastEditorRange = range.cloneRange();
@@ -1082,7 +2040,6 @@ const localDBWords = [
 
     function restoreEditorSelection() {
       if (!lastEditorRange) return false;
-
       const selection = window.getSelection();
       selection.removeAllRanges();
       selection.addRange(lastEditorRange);
@@ -1091,31 +2048,23 @@ const localDBWords = [
 
     function getWordInfoAtCursor() {
       let selection = window.getSelection();
-
       if ((!selection.rangeCount || !inputTextEl.contains(selection.getRangeAt(0).startContainer)) && lastEditorRange) {
         restoreEditorSelection();
         selection = window.getSelection();
       }
-
       if (!selection.rangeCount) return null;
-
       const range = selection.getRangeAt(0);
       const textNode = range.startContainer;
       if (!textNode || textNode.nodeType !== Node.TEXT_NODE || !textNode.textContent) return null;
-
       const textContent = textNode.textContent;
       const pos = range.startOffset;
-      const regex = /\b\w+\b/g;
+      const regex = /[A-Za-z0-9_]+/g;
       let match;
-
       while ((match = regex.exec(textContent)) !== null) {
         const start = match.index;
         const end = start + match[0].length;
-        if (pos >= start && pos <= end) {
-          return { word: match[0], textNode, start, end };
-        }
+        if (pos >= start && pos <= end) return { word: match[0], textNode, start, end };
       }
-
       return null;
     }
 
@@ -1124,16 +2073,20 @@ const localDBWords = [
     }
 
     async function showPredictionsForWord() {
+      if (getSelectedTypingLanguage() !== 'en') {
+        showPredictions([]);
+        return;
+      }
       const word = getWordAtCursor();
-      if (!word) return;
-
-      let predictions = localDBWords.filter(w => w.startsWith(word.toLowerCase())).slice(0,5);
-
+      if (!word || word.length < 1) {
+        showPredictions([]);
+        return;
+      }
+      let predictions = uniqueLocalWords.filter(w => w.startsWith(word.toLowerCase()) && w !== word.toLowerCase()).slice(0, 7);
       if (onlinePredictionEnabled) {
         const onlinePreds = await fetchOnlinePredictions(word);
-        predictions = [...new Set([...predictions, ...onlinePreds])];
+        predictions = [...new Set([...predictions, ...onlinePreds])].slice(0, 10);
       }
-
       showPredictions(predictions);
     }
 
@@ -1142,90 +2095,543 @@ const localDBWords = [
       div.innerHTML = '';
       predictions.forEach(word => {
         const btn = document.createElement('button');
+        btn.type = 'button';
         btn.className = 'prediction-item';
         btn.textContent = word;
-
-        // Keep the cursor position inside the workspace when clicking a suggestion.
         btn.addEventListener('mousedown', event => event.preventDefault());
         btn.addEventListener('click', () => replaceWord(word));
-
         div.appendChild(btn);
       });
     }
 
     function replaceWord(newWord) {
       restoreEditorSelection();
-
       const wordInfo = getWordInfoAtCursor();
       if (!wordInfo) {
         inputTextEl.focus();
         return;
       }
-
       const { textNode, start, end } = wordInfo;
       const textContent = textNode.textContent;
       const nextChar = textContent.charAt(end);
-
-      // Insert the selected suggestion and keep a ready space for the next word.
-      // A non-breaking space keeps the caret visibly after the inserted word in contenteditable fields.
-      const trailingSpace = nextChar && /\s/.test(nextChar) ? '' : '\u00A0';
+      const trailingSpace = nextChar && /\s/.test(nextChar) ? '' : ' ';
       const insertedText = newWord + trailingSpace;
       textNode.textContent = textContent.slice(0, start) + insertedText + textContent.slice(end);
-
       const caretPosition = start + insertedText.length;
       const range = document.createRange();
       range.setStart(textNode, caretPosition);
       range.collapse(true);
-
       const selection = window.getSelection();
       selection.removeAllRanges();
       selection.addRange(range);
       lastEditorRange = range.cloneRange();
-
       inputTextEl.focus();
       activateTypingGlow();
-      document.getElementById('predictions').innerHTML = '';
+      updateStats();
+      scheduleAutoSave();
+      showPredictions([]);
     }
-
-    let typingGlowTimer;
 
     function activateTypingGlow() {
       inputTextEl.classList.add('is-typing');
       clearTimeout(typingGlowTimer);
-      typingGlowTimer = setTimeout(() => {
-        inputTextEl.classList.remove('is-typing');
+      typingGlowTimer = setTimeout(() => inputTextEl.classList.remove('is-typing'), 850);
+    }
+
+    function setGrammarCounts(errorCount, nowCount = errorCount, status = '') {
+      document.getElementById('grammarErrorCount').textContent = errorCount;
+      document.getElementById('grammarNowCount').textContent = nowCount;
+      if (status) document.getElementById('grammarLiveStatus').textContent = status;
+    }
+
+    async function getGrammarMatchCount(text) {
+      const response = await fetch('https://api.languagetool.org/v2/check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ text, language: 'en-US' })
+      });
+      if (!response.ok) throw new Error('LanguageTool connection failed');
+      const data = await response.json();
+      return data.matches.length;
+    }
+
+
+    async function getGrammarMatches(text) {
+      const response = await fetch('https://api.languagetool.org/v2/check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ text, language: 'en-US' })
+      });
+      if (!response.ok) throw new Error('LanguageTool connection failed');
+      const data = await response.json();
+      return data.matches || [];
+    }
+
+    function getGrammarCorrectionSegments() {
+      const preferredBlocks = [...inputTextEl.querySelectorAll('li, p, div, blockquote')]
+        .filter(el => ![...preferredBlocksSafeChildren(el)].some(child => child !== el && child.matches?.('li, p, div, blockquote')))
+        .filter(el => (el.textContent || '').trim());
+
+      const directTextNodes = [...inputTextEl.childNodes]
+        .filter(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim())
+        .map(node => ({ node, isTextNode: true }));
+
+      const elementSegments = preferredBlocks.map(node => ({ node, isTextNode: false }));
+      const segments = [...directTextNodes, ...elementSegments];
+      return segments.length ? segments : [{ node: inputTextEl, isTextNode: false }];
+    }
+
+    function preferredBlocksSafeChildren(el) {
+      try { return el.querySelectorAll('li, p, div, blockquote'); }
+      catch { return []; }
+    }
+
+    function locateTextPoint(container, offset) {
+      const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null);
+      let currentOffset = 0;
+      let node;
+      while ((node = walker.nextNode())) {
+        const nextOffset = currentOffset + node.textContent.length;
+        if (offset <= nextOffset) {
+          return { node, offset: Math.max(0, offset - currentOffset) };
+        }
+        currentOffset = nextOffset;
+      }
+      const fallback = container.lastChild && container.lastChild.nodeType === Node.TEXT_NODE
+        ? container.lastChild
+        : container.appendChild(document.createTextNode(''));
+      return { node: fallback, offset: fallback.textContent.length };
+    }
+
+    function applyGrammarMatchesToSegment(segment, matches) {
+      const validMatches = [...matches]
+        .filter(match => match.replacements && match.replacements.length && match.replacements[0].value)
+        .sort((a, b) => b.offset - a.offset);
+
+      if (!validMatches.length) return 0;
+
+      if (segment.isTextNode) {
+        let original = segment.node.textContent;
+        validMatches.forEach(match => {
+          const replacement = match.replacements[0].value;
+          const start = match.offset;
+          const end = start + match.length;
+          original = original.slice(0, start) + replacement + original.slice(end);
+        });
+        segment.node.textContent = original;
+        return validMatches.length;
+      }
+
+      validMatches.forEach(match => {
+        const replacement = match.replacements[0].value;
+        const start = match.offset;
+        const end = start + match.length;
+        const startPoint = locateTextPoint(segment.node, start);
+        const endPoint = locateTextPoint(segment.node, end);
+        const range = document.createRange();
+        range.setStart(startPoint.node, startPoint.offset);
+        range.setEnd(endPoint.node, endPoint.offset);
+        range.deleteContents();
+        range.insertNode(document.createTextNode(replacement));
+      });
+
+      return validMatches.length;
+    }
+
+    async function checkAndCorrectGrammarPreservingFormat() {
+      const segments = getGrammarCorrectionSegments();
+      let errorBefore = 0;
+      let correctedCount = 0;
+
+      for (const segment of segments) {
+        const segmentText = segment.node.textContent || '';
+        if (!segmentText.trim()) continue;
+        const matches = await getGrammarMatches(segmentText);
+        errorBefore += matches.length;
+        correctedCount += applyGrammarMatchesToSegment(segment, matches);
+      }
+
+      return { errorBefore, correctedCount };
+    }
+
+    function scheduleLiveGrammarCheck() {
+      const text = getPlainText().trim();
+      clearTimeout(grammarCheckTimer);
+      if (getSelectedTypingLanguage() !== 'en') {
+        setGrammarCounts(0, 0, 'Translate to English for grammar count');
+        return;
+      }
+      if (!text) {
+        setGrammarCounts(0, 0, 'Live check ready');
+        return;
+      }
+      setGrammarCounts(document.getElementById('grammarErrorCount').textContent || 0, document.getElementById('grammarNowCount').textContent || 0, 'Checking while typing...');
+      const requestId = ++grammarRequestId;
+      grammarCheckTimer = setTimeout(async () => {
+        try {
+          const count = await getGrammarMatchCount(text);
+          if (requestId !== grammarRequestId) return;
+          setGrammarCounts(count, count, count ? 'Live grammar issues detected' : 'No live grammar issues');
+        } catch {
+          if (requestId !== grammarRequestId) return;
+          document.getElementById('grammarLiveStatus').textContent = 'Live check unavailable';
+        }
       }, 850);
     }
+
+    function updateStats() {
+      const text = getPlainText().trim();
+      const words = text ? text.match(/[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu) || [] : [];
+      const sentences = text ? text.split(/[.!?]+/).filter(s => s.trim().length > 0) : [];
+      const readingMinutes = words.length ? Math.max(1, Math.ceil(words.length / 220)) : 0;
+      document.getElementById('wordCount').textContent = words.length;
+      document.getElementById('charCount').textContent = text.length;
+      document.getElementById('sentenceCount').textContent = sentences.length;
+      document.getElementById('readingTime').textContent = readingMinutes + 'm';
+      if (!text) setGrammarCounts(0, 0, 'Live check ready');
+      updateInsight(words.length, sentences.length, text);
+    }
+
+    function updateInsight(words, sentences, text) {
+      const box = document.getElementById('smartInsight');
+      if (!text.trim()) {
+        box.textContent = 'Start writing to see a live writing insight.';
+        return;
+      }
+      const avg = sentences ? Math.round(words / sentences) : words;
+      if (avg > 28) box.textContent = 'Smart insight: your sentences are a little long. Consider splitting them for easier reading.';
+      else if (words < 25) box.textContent = 'Smart insight: good start. Add more context if this is a formal message or report note.';
+      else box.textContent = 'Smart insight: your text looks balanced and easy to scan.';
+    }
+
+    function saveDraftNow() {
+      localStorage.setItem(STORAGE_KEY, inputTextEl.innerHTML);
+      setStatus('Saved');
+    }
+
+    function scheduleAutoSave() {
+      setStatus('Saving...');
+      clearTimeout(autoSaveTimer);
+      autoSaveTimer = setTimeout(saveDraftNow, 450);
+    }
+
+    function loadStoredDraft() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (!saved) return;
+      if (!inputTextEl.innerHTML.trim()) {
+        inputTextEl.innerHTML = saved;
+        setStatus('Recovered');
+      }
+    }
+    function selectEditorContent() {
+      inputTextEl.focus();
+      const range = document.createRange();
+      range.selectNodeContents(inputTextEl);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      saveEditorSelection();
+    }
+
+    function downloadFile(filename, content, type) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    document.querySelectorAll('[data-command]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        inputTextEl.focus();
+        document.execCommand(btn.dataset.command, false, null);
+        saveEditorSelection();
+        scheduleAutoSave();
+        updateStats();
+      });
+    });
+
+    function findActiveListElement() {
+      const selection = window.getSelection();
+      if (!selection.rangeCount) return null;
+      let node = selection.getRangeAt(0).startContainer;
+      if (node && node.nodeType === Node.TEXT_NODE) node = node.parentElement;
+      while (node && node !== inputTextEl) {
+        if (node.tagName === 'OL' || node.tagName === 'UL') return node;
+        node = node.parentElement;
+      }
+      return null;
+    }
+
+    document.getElementById('lettersListBtn').addEventListener('click', () => {
+      inputTextEl.focus();
+      restoreEditorSelection();
+      document.execCommand('insertOrderedList', false, null);
+      const activeList = findActiveListElement();
+      if (activeList && activeList.tagName === 'OL') {
+        activeList.style.listStyleType = 'lower-alpha';
+      }
+      saveEditorSelection();
+      scheduleAutoSave();
+      updateStats();
+      showToast('Letter list applied.');
+    });
+
+    document.getElementById('sentenceCaseBtn').addEventListener('click', () => {
+      const text = getPlainText().toLowerCase().replace(/(^\s*[a-z])|([.!?]\s+[a-z])/g, s => s.toUpperCase());
+      inputTextEl.innerText = text;
+      updateStats();
+      scheduleAutoSave();
+      showToast('Text converted to sentence case.');
+    });
+
+    document.getElementById('checkTextBtn').addEventListener('click', async () => {
+      const text = getPlainText();
+      clearTimeout(grammarCheckTimer);
+      grammarRequestId++;
+      if (!text.trim()) {
+        setGrammarCounts(0, 0, 'Live check ready');
+        showToast('Please type text before checking grammar.');
+        return;
+      }
+      if (getSelectedTypingLanguage() !== 'en') {
+        setGrammarCounts(0, 0, 'Translate to English for grammar count');
+        showToast('Please translate the Arabic or Urdu text to English before grammar checking.', 'warning');
+        return;
+      }
+
+      setStatus('Checking...');
+      document.getElementById('grammarLiveStatus').textContent = 'Checking and correcting while keeping list format...';
+
+      try {
+        const result = await checkAndCorrectGrammarPreservingFormat();
+        updateStats();
+
+        let errorNow = 0;
+        const correctedPlainText = getPlainText().trim();
+        if (correctedPlainText) {
+          try { errorNow = await getGrammarMatchCount(correctedPlainText); }
+          catch { errorNow = Math.max(0, result.errorBefore - result.correctedCount); }
+        }
+
+        setGrammarCounts(result.errorBefore, errorNow, `Error: ${result.errorBefore} • Now: ${errorNow}`);
+        scheduleAutoSave();
+        setStatus('Ready');
+        inputTextEl.focus();
+        saveEditorSelection();
+        showToast(result.errorBefore ? `${result.errorBefore} grammar error(s) corrected. Lists and formatting kept. Now: ${errorNow}.` : 'No grammar issues found.');
+      } catch {
+        setStatus('Ready');
+        document.getElementById('grammarLiveStatus').textContent = 'Grammar service unavailable';
+        showToast('Grammar service is not reachable. Please check your internet connection.', 'error');
+      }
+    });
+
+    document.getElementById('copyTextBtn').addEventListener('click', async () => {
+      const text = getPlainText();
+      if (!text.trim()) { showToast('Nothing to copy.', 'warning', true); return; }
+      try { await navigator.clipboard.writeText(text); showToast('Copied to clipboard.', 'success', true); }
+      catch { selectEditorContent(); showToast('Text selected. Press Ctrl+C to copy.', 'info', true); }
+    });
+    function insertPlainTextAtCursor(text) {
+      if (!text) return;
+      inputTextEl.focus();
+      restoreEditorSelection();
+
+      // Insert plain text only, so pasted content does not carry black/hidden colors, fonts, or backgrounds.
+      if (document.queryCommandSupported && document.queryCommandSupported('insertText')) {
+        document.execCommand('insertText', false, text);
+      } else {
+        const selection = window.getSelection();
+        if (!selection.rangeCount) {
+          inputTextEl.appendChild(document.createTextNode(text));
+        } else {
+          const range = selection.getRangeAt(0);
+          range.deleteContents();
+          const node = document.createTextNode(text);
+          range.insertNode(node);
+          range.setStartAfter(node);
+          range.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+      }
+
+      saveEditorSelection();
+      updateStats();
+      scheduleLiveGrammarCheck();
+      scheduleAutoSave();
+    }
+
+    document.getElementById('pasteTextBtn').addEventListener('click', () => {
+      inputTextEl.focus();
+      restoreEditorSelection();
+      saveEditorSelection();
+
+      // Browser security does not allow silent clipboard reading without a permission prompt.
+      // This button intentionally avoids navigator.clipboard.readText() so Chrome will not show
+      // the "This file wants to see text and images copied to the clipboard" warning.
+      showToast('Workspace ready. Press Ctrl+V to paste clean readable text.', 'info', true);
+    });
+
+    document.getElementById('clearTextBtn').addEventListener('click', async () => {
+      if (!getPlainText().trim()) { showToast('Workspace is already clear.', 'warning'); return; }
+      const confirmed = await showConfirmModal({
+        title: 'Clear Workspace',
+        message: 'This will remove all text currently inside the workspace and delete the saved browser draft.',
+        confirmText: 'Clear Text',
+        cancelText: 'Keep Text',
+        danger: true
+      });
+      if (!confirmed) { showToast('Clear cancelled.', 'info'); return; }
+      inputTextEl.innerHTML = '';
+      setTranslationText('');
+      localStorage.removeItem(STORAGE_KEY);
+      clearTimeout(autoSaveTimer);
+      setStatus('Ready');
+      updateStats();
+      showPredictions([]);
+      showToast('Workspace cleared and saved draft deleted.', 'success');
+    });
+    document.getElementById('exportWordBtn').addEventListener('click', () => {
+      const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Smart Text Assistant Export</title></head><body>${inputTextEl.innerHTML}</body></html>`;
+      downloadFile('Smart_Text_Assistant_Document.doc', html, 'application/msword;charset=utf-8');
+    });
+
+    document.getElementById('selectAllBtn').addEventListener('click', () => {
+      selectEditorContent();
+      showToast('All text selected.');
+    });
+
+    const focusModeBtn = document.getElementById('focusModeBtn');
+    const focusModeIcon = focusModeBtn.querySelector('.btn-icon');
+    const focusModeLabel = focusModeBtn.querySelector('span:last-child');
+
+    function setFocusMode(enabled) {
+      const sidePanel = document.querySelector('.side-panel');
+      const workspace = document.querySelector('.workspace');
+
+      sidePanel.style.display = enabled ? 'none' : '';
+      workspace.style.gridTemplateColumns = enabled ? '1fr' : '';
+      focusModeIcon.textContent = enabled ? '↩️' : '🎯';
+      focusModeLabel.textContent = enabled ? 'Normal Mode' : 'Focus Mode';
+      focusModeBtn.classList.toggle('active-mode', enabled);
+      focusModeBtn.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+
+      showToast(enabled ? 'Focus mode enabled.' : 'Normal mode enabled.');
+      inputTextEl.focus();
+    }
+
+    focusModeBtn.addEventListener('click', () => {
+      const isFocusMode = document.querySelector('.side-panel').style.display === 'none';
+      setFocusMode(!isFocusMode);
+    });
+
+    const disclaimerBtn = document.getElementById('disclaimerBtn');
+    const disclaimerOverlay = document.getElementById('disclaimerOverlay');
+    const disclaimerCloseBtn = document.getElementById('disclaimerCloseBtn');
+
+    function openDisclaimerModal() {
+      disclaimerOverlay.classList.add('show');
+      disclaimerOverlay.setAttribute('aria-hidden', 'false');
+      setTimeout(() => disclaimerCloseBtn.focus(), 50);
+    }
+
+    function closeDisclaimerModal() {
+      disclaimerOverlay.classList.remove('show');
+      disclaimerOverlay.setAttribute('aria-hidden', 'true');
+      disclaimerBtn.focus();
+    }
+
+    disclaimerBtn.addEventListener('click', openDisclaimerModal);
+    disclaimerCloseBtn.addEventListener('click', closeDisclaimerModal);
+    disclaimerOverlay.addEventListener('click', event => {
+      if (event.target === disclaimerOverlay) closeDisclaimerModal();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && disclaimerOverlay.classList.contains('show')) closeDisclaimerModal();
+    });
+
+    const typingLanguageSelect = document.getElementById('typingLanguageSelect');
+    applyTypingLanguage(localStorage.getItem(LANGUAGE_KEY) || 'en');
+    typingLanguageSelect.addEventListener('change', e => {
+      applyTypingLanguage(e.target.value);
+      showToast(e.target.value === 'en' ? 'English left-to-right typing enabled.' : `${e.target.options[e.target.selectedIndex].text.split(' - ')[0]} right-to-left typing enabled.`);
+      updateStats();
+    });
+
+    document.getElementById('copyTranslationBtn').addEventListener('click', async () => {
+      const text = getTranslationText();
+      if (!text.trim()) { showToast('No translation to copy yet.', 'warning', true); return; }
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast('English translation copied.', 'success', true);
+      } catch {
+        const translationEl = document.getElementById('translationText');
+        const range = document.createRange();
+        range.selectNodeContents(translationEl);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        showToast('Translation selected. Press Ctrl+C to copy.', 'info', true);
+      }
+    });
+
+    document.getElementById('translateEnglishBtn').addEventListener('click', translateWorkspaceToEnglish);
+
+    document.getElementById('onlinePredictionCheckbox').addEventListener('change', e => {
+      onlinePredictionEnabled = e.target.checked;
+      showToast(onlinePredictionEnabled ? 'Online predictions enabled.' : 'Online predictions disabled.');
+      showPredictionsForWord();
+    });
+
+    const darkThemeCheckbox = document.getElementById('darkThemeCheckbox');
+    function applyThemePreference(enabled) {
+      document.body.classList.toggle('dark-theme', enabled);
+      darkThemeCheckbox.checked = enabled;
+      localStorage.setItem(THEME_KEY, enabled ? '1' : '0');
+    }
+
+    applyThemePreference(localStorage.getItem(THEME_KEY) === '1');
+    darkThemeCheckbox.addEventListener('change', e => {
+      applyThemePreference(e.target.checked);
+      showToast(e.target.checked ? 'Dark theme enabled.' : 'Light theme enabled.');
+    });
 
     inputTextEl.addEventListener('input', () => {
       saveEditorSelection();
       activateTypingGlow();
-      showPredictionsForWord();
+      updateStats();
+      scheduleAutoSave();
+      const translationStatus = document.getElementById('translationStatus');
+      if (translationStatus && getTranslationText().trim()) translationStatus.textContent = 'Update available';
+      if (getSelectedTypingLanguage() === 'en') {
+        scheduleLiveGrammarCheck();
+        showPredictionsForWord();
+      } else {
+        clearTimeout(grammarCheckTimer);
+        showPredictions([]);
+        setGrammarCounts(0, 0, 'Translate to English for grammar count');
+      }
     });
-    inputTextEl.addEventListener('keyup', saveEditorSelection);
+    inputTextEl.addEventListener('keyup', () => { saveEditorSelection(); showPredictionsForWord(); });
     inputTextEl.addEventListener('mouseup', saveEditorSelection);
-    inputTextEl.addEventListener('click', () => {
-      saveEditorSelection();
-      showPredictionsForWord();
+    inputTextEl.addEventListener('click', () => { saveEditorSelection(); showPredictionsForWord(); });
+    inputTextEl.addEventListener('paste', event => {
+      event.preventDefault();
+      const text = (event.clipboardData || window.clipboardData).getData('text/plain');
+      insertPlainTextAtCursor(text);
+      showToast('Pasted as clean readable text.', 'success', true);
     });
 
-    document.getElementById('onlinePredictionCheckbox').addEventListener('change', e => {
-      onlinePredictionEnabled = e.target.checked;
-    });
-
-
-    const darkThemeCheckbox = document.getElementById('darkThemeCheckbox');
-
-    function applyThemePreference(enabled) {
-      document.body.classList.toggle('dark-theme', enabled);
-      darkThemeCheckbox.checked = enabled;
-      localStorage.setItem('smartTextAssistantDarkTheme', enabled ? '1' : '0');
-    }
-
-    applyThemePreference(localStorage.getItem('smartTextAssistantDarkTheme') === '1');
-
-    darkThemeCheckbox.addEventListener('change', e => {
-      applyThemePreference(e.target.checked);
+    loadStoredDraft();
+    updateStats();
+    window.addEventListener('beforeunload', () => {
+      if (inputTextEl.innerHTML.trim()) saveDraftNow();
     });
   </script>
 </body>
